@@ -20,7 +20,7 @@ dependencies{
 }
 
 jar{
-    archiveFileName = "!MeowLand.jar"
+    archiveFileName = "MeowLandPlugin.jar"
     version=null
     from{
         configurations.runtimeClasspath.collect{it.isDirectory() ? it : zipTree(it)}
