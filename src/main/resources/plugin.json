@@ -1,0 +1,8 @@
+{
+  "name": "MeowLand plugin",
+  "displayName": "meowland plugin",
+  "author": "ZetaMap",
+  "main": "MeowlandPlugin",
+  "description": "nya",
+  "version": "0.1"
+}
