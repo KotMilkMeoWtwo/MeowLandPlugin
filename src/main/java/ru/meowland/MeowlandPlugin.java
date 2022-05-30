@@ -49,7 +49,6 @@ public class MeowlandPlugin extends Plugin {
                     player.sendMessage("[red]Число должно быть числом");
                     return;
                 }
-                player.sendMessage("0: " + args[0] + "1: " + args[1] + "2: " + args[2]);
                 Team team;
                 if (args[2].equals("sharded")) {
                     team = Team.sharded;
@@ -65,7 +64,6 @@ public class MeowlandPlugin extends Plugin {
                     team = Team.purple;
                 } else {
                     player.sendMessage("Есть команды: [yellow]sharded[], [blue]blue[], [red]crux[], [gray]derelict[], [green]green[], [purple]purple[].");
-                    player.sendMessage(args[2]);
                     return;
                 }
                 if(count > 15){
