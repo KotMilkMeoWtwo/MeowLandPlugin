@@ -11,11 +11,18 @@ import mindustry.net.Administration;
 import mindustry.net.Administration.Config;
 import mindustry.type.UnitType;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class MeowlandPlugin extends Plugin {
+
+    private static double ratio = 0.6;
+    private HashSet<String> votes = new HashSet<>();
     @Override
     public void init(){
         Events.on(EventType.PlayerConnect.class, event ->{
             Player player = event.player;
+            Config.showConnectMessages.set(false);
             Call.sendMessage("[lime]Игрок [#B](" + player.name + "[#B]) [lime]зашёл");
         });
 
@@ -85,6 +92,18 @@ public class MeowlandPlugin extends Plugin {
                 player.sendMessage("[red]Ты не админ");
                 return;
             }
+        });
+        handler.<Player>register("rtv", "Проголосовать за смену карты", (args, player) ->{
+            this.votes.add(player.uuid());
+            int cur = this.votes.size();
+            int req = (int) Math.ceil(ratio * Groups.player.size());
+            Call.sendMessage("[navy]RTV[]: " + player.name + "[]голосует за смену карты [green]" + cur + "[] голос(ов;a), из [green]" + req);
+            if(cur < req){
+                return;
+            }
+            this.votes.clear();
+            Call.sendMessage("[navy]RTV[]: голоса приняты, смена карты");
+            Events.fire(new EventType.GameOverEvent(Team.crux));
         });
     }
 }
