@@ -1,31 +1,31 @@
 package ru.meowland;
 
 import arc.Events;
+import arc.files.Fi;
 import arc.util.CommandHandler;
-import club.minnced.discord.webhook.WebhookClient;
-import club.minnced.discord.webhook.WebhookClientBuilder;
-import jdk.internal.jshell.tool.MessageHandler;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.mod.Plugin;
-import mindustry.net.Administration.Config;
 import mindustry.type.UnitType;
+import ru.meowland.discord.PlayerJoin;
+import ru.meowland.discord.PlayerLeave;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.HashSet;
 
 public class MeowlandPlugin extends Plugin {
 
+    public static final Fi pluginDir = new Fi("./config/mods/MeowlandPlugin");
     private static double ratio = 0.6;
     private HashSet<String> votes = new HashSet<>();
-    private String webhookUrl = "nya";
+    private String webhookUrl = "https://discord.com/api/webhooks/981128268650512404/6oAtTAW463HnGwd_Zcvis0Kizuhe25DTRUkqJfOtE9u4wfalxSNVOdO1HgEAClKR0azn";
     @Override
     public void init(){
-        send();
+        PlayerJoin join = new PlayerJoin();
+        join.join();
+        PlayerLeave leave = new PlayerLeave();
+        leave.leave();
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
@@ -106,34 +106,5 @@ public class MeowlandPlugin extends Plugin {
             Events.fire(new EventType.GameOverEvent(Team.crux));
         });
     }
-    public void send(){
-        Events.on(EventType.PlayerConnect.class, event ->{
-            Player player = event.player;
-            Config.showConnectMessages.set(false);
-            Call.sendMessage("[lime]Игрок [#B](" + player.name + "[#B]) [lime]зашёл");
-            String jsonBrut = "";
-            jsonBrut += "{\"embeds\": [{"
-                    + "\"title\": \""+ player.name +"\","
-                    + "\"description\": \""+ player.name +"\","
-                    + "\"color\": 15258703"
-                    + "}],"
-                    +"\"username\": \""+ player.name +"\"}";
-            try {
-                URL url = new URL(webhookUrl);
-                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-                con.addRequestProperty("Content-Type", "application/json");
-                con.addRequestProperty("meow", "nya");
-                con.setDoOutput(true);
-                con.setRequestMethod("POST");
-                OutputStream stream = con.getOutputStream();
-                stream.write(jsonBrut.getBytes());
-                stream.flush();
-                stream.close();
-                con.getInputStream().close();
-                con.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
+
 }
