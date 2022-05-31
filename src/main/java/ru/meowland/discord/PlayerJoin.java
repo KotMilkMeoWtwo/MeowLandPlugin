@@ -3,20 +3,30 @@ package ru.meowland.discord;
 import arc.Core;
 import arc.Events;
 import arc.files.Fi;
+import arc.util.Log;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.net.Administration;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.yaml.snakeyaml.Yaml;
+import ru.meowland.discord.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Map;
 
 public class PlayerJoin {
-    private String webhookUrl = "fOtE9u4wfalxSNVOdO1HgEAClKR0azn";
+    private String webhookUrl;
+    private Map<String, Object> obj;
+
     public void join(){
+        Config conf = new Config();
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
+        webhookUrl = obj.get("webhook_url").toString();
         Events.on(EventType.PlayerConnect.class, event ->{
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);

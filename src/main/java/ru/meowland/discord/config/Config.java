@@ -1,32 +1,36 @@
 package ru.meowland.discord.config;
 
-import arc.files.Fi;
-import arc.struct.ObjectMap;
-import jdk.incubator.jpackage.internal.Log;
-import ru.meowland.MeowlandPlugin;
+import arc.Core;
+import arc.util.Log;
+import org.yaml.snakeyaml.Yaml;
+
+import java.util.Map;
 
 public class Config {
-    public static final String fileName = "config.properties";
-    public static final Fi file = MeowlandPlugin.pluginDir.child(fileName);
+    private static String config = "webhook_url: url"+
+            "\nchannel_id: id";
+    private Map<String, Object> obj;
 
-    private static ObjectMap<String, String> config;
+    public String webhook_url;
 
-    public static void init(){
-        if(!file.exists()){
-            MeowlandPlugin.pluginDir.mkdirs();
-            ResourceUtil.copy(fileName, file);
-
-            Log.info("Конфиги сексесфул сгенерированы  в " + file.path());
+    public void loadConfig() {
+        if(!Core.settings.getDataDirectory().child("config.yml").exists()){
+            Core.settings.getDataDirectory().child("config.yml").writeString(config);
+            Log.info("Конфиг сгенерирован");
+        }else {
+            Log.info("Конфиг загружен");
         }
-    }
-    public static String get(String key){
-        return config.get(key);
-    }
-    public static boolean getBoolean(String key) {
-        return Boolean.parseBoolean(get(key));
+
+        Log.info(Core.settings.getDataDirectory().child("config.yml").toString());
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
+        webhook_url = obj.get("webhook_url").toString();
     }
 
-    public static int getInt(String key) {
-        return Integer.parseInt(get(key));
+    public Config() {
+        this.obj = obj;
     }
+
+
 }
+

@@ -3,6 +3,7 @@ package ru.meowland;
 import arc.Events;
 import arc.files.Fi;
 import arc.util.CommandHandler;
+import arc.util.Log;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
@@ -11,7 +12,9 @@ import mindustry.mod.Plugin;
 import mindustry.type.UnitType;
 import ru.meowland.discord.PlayerJoin;
 import ru.meowland.discord.PlayerLeave;
+import ru.meowland.discord.config.Config;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 public class MeowlandPlugin extends Plugin {
@@ -19,13 +22,16 @@ public class MeowlandPlugin extends Plugin {
     public static final Fi pluginDir = new Fi("./config/mods/MeowlandPlugin");
     private static double ratio = 0.6;
     private HashSet<String> votes = new HashSet<>();
-    private String webhookUrl = "https://discord.com/api/webhooks/981128268650512404/6oAtTAW463HnGwd_Zcvis0Kizuhe25DTRUkqJfOtE9u4wfalxSNVOdO1HgEAClKR0azn";
+    private String webhookUrl;
     @Override
     public void init(){
         PlayerJoin join = new PlayerJoin();
         join.join();
         PlayerLeave leave = new PlayerLeave();
         leave.leave();
+        Config con = new Config();
+        con.loadConfig();
+        webhookUrl = con.webhook_url;
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
