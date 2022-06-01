@@ -2,16 +2,12 @@ package ru.meowland.discord;
 
 import arc.Core;
 import arc.Events;
-import arc.files.Fi;
-import arc.util.Log;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.net.Administration;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.yaml.snakeyaml.Yaml;
-import ru.meowland.discord.config.Config;
+import ru.meowland.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.OutputStream;
@@ -35,9 +31,11 @@ public class PlayerJoin {
             jsonBrut += "{\"embeds\": [{"
                     + "\"title\": \""+ player.name +"\","
                     + "\"description\": \"Зашёл\","
-                    + "\"color\": 15258703"
+                    + "\"color\": 3211008"
                     + "}],"
-                    +"\"username\": \""+ player.name +"\"}";
+                    +"\"username\": \""+ player.name +"\","
+                    + "\"avatar\": \"https://media.discordapp.net/attachments/981128238766112808/981527456357974056/unknown.png\""
+                    + "}";
             try {
                 URL url = new URL(webhookUrl);
                 HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
@@ -56,4 +54,6 @@ public class PlayerJoin {
             }
         });
     }
+
+
 }

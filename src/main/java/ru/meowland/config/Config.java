@@ -1,4 +1,4 @@
-package ru.meowland.discord.config;
+package ru.meowland.config;
 
 import arc.Core;
 import arc.util.Log;

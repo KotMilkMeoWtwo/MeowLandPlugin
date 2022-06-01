@@ -3,26 +3,28 @@ package ru.meowland;
 import arc.Events;
 import arc.files.Fi;
 import arc.util.CommandHandler;
-import arc.util.Log;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.mod.Plugin;
 import mindustry.type.UnitType;
+import ru.meowland.commands.AdminCommands;
 import ru.meowland.discord.PlayerJoin;
 import ru.meowland.discord.PlayerLeave;
-import ru.meowland.discord.config.Config;
+import ru.meowland.config.Config;
+import ru.meowland.discord.PlayerMessage;
 
-import java.io.IOException;
 import java.util.HashSet;
+import java.util.logging.Handler;
 
 public class MeowlandPlugin extends Plugin {
 
-    public static final Fi pluginDir = new Fi("./config/mods/MeowlandPlugin");
+    private String webhookUrl;
+
     private static double ratio = 0.6;
     private HashSet<String> votes = new HashSet<>();
-    private String webhookUrl;
+
     @Override
     public void init(){
         PlayerJoin join = new PlayerJoin();
@@ -32,14 +34,17 @@ public class MeowlandPlugin extends Plugin {
         Config con = new Config();
         con.loadConfig();
         webhookUrl = con.webhook_url;
+        AdminCommands adminCommands = new AdminCommands();
+        PlayerMessage message = new PlayerMessage();
+        message.message();
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
         handler.<Player>register("shiza",
                 "<text...>",
                 "позволяет разговаривать с самим собой. никто, кроме консоли, не узанет, что ты тут пишешь",  (args, player) -> {
-            player.sendMessage(args[0]);
-        });
+                    player.sendMessage(args[0]);
+                });
 
         handler.<Player>register("despw", "", "Убивает всех юнитов на сервере", (args, player) -> {
             if(player.admin){
@@ -112,5 +117,6 @@ public class MeowlandPlugin extends Plugin {
             Events.fire(new EventType.GameOverEvent(Team.crux));
         });
     }
+
 
 }
