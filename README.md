@@ -1,1 +1,1 @@
-не читай меня
+This plugin add discord integration, commands (rtv, team, despw, spawn and etc)
