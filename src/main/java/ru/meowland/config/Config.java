@@ -21,7 +21,7 @@ public class Config {
             Log.info("Конфиг загружен");
         }
 
-        Log.info(Core.settings.getDataDirectory().child("config.yml").toString());
+        Log.info("Путь к конфигу MeowLand: " + Core.settings.getDataDirectory().child("config.yml").toString());
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
         webhook_url = obj.get("webhook_url").toString();

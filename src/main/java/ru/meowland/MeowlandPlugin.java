@@ -3,6 +3,7 @@ package ru.meowland;
 import arc.Events;
 import arc.files.Fi;
 import arc.util.CommandHandler;
+import arc.util.Log;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
@@ -37,6 +38,7 @@ public class MeowlandPlugin extends Plugin {
         AdminCommands adminCommands = new AdminCommands();
         PlayerMessage message = new PlayerMessage();
         message.message();
+        Log.info("Плагин Meowland запущен");
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
