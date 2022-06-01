@@ -2,6 +2,7 @@ package ru.meowland.discord;
 
 import arc.Core;
 import arc.Events;
+import arc.util.Log;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.Player;
@@ -15,29 +16,45 @@ import java.net.URL;
 import java.util.Map;
 
 public class PlayerJoin {
-    private String webhookUrl;
+
+    private String webhook_url;
+    private String server_name;
+    private String avatar_url;
+    private String channel_id;
+
     private Map<String, Object> obj;
 
     public void join(){
         Config conf = new Config();
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
-        webhookUrl = obj.get("webhook_url").toString();
+        webhook_url = obj.get("webhook_url").toString();
+        channel_id = obj.get("channel_id").toString();
+        avatar_url = obj.get("avatar_url").toString();
+        server_name = obj.get("server_name").toString();
         Events.on(EventType.PlayerConnect.class, event ->{
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
             Call.sendMessage("[lime]Игрок [#B](" + player.name + "[#B]) [lime]зашёл");
             String jsonBrut = "";
-            jsonBrut += "{\"embeds\": [{"
+            jsonBrut += "{\"embeds\": "
+                    + " \n["
+                    + "     \n{"
+                    + "         \n\"author\": {"
+                    + "         \n\"name\": \"" + player.name + "\","
+                    + "         \n\"icon_url\": \"https://github.com/Anuken/Mindustry/blob/master/core/assets-raw/sprites/units/gamma.png?raw=true\""
+                    + "     \n},"
+                    + "     \n\"description\": \"Зашёл\","
+                    + "     \n\"color\": 3211008"
+                    + "     \n}"
+                    + " \n],"
+                    +"\"username\": \""+ server_name +"\","
                     + "\"title\": \""+ player.name +"\","
-                    + "\"description\": \"Зашёл\","
-                    + "\"color\": 3211008"
-                    + "}],"
-                    +"\"username\": \""+ player.name +"\","
-                    + "\"avatar\": \"https://media.discordapp.net/attachments/981128238766112808/981527456357974056/unknown.png\""
+                    + "\"channel_id\": \""+ channel_id +"\","
+                    + "\"avatar_url\": \""+ avatar_url +"\""
                     + "}";
             try {
-                URL url = new URL(webhookUrl);
+                URL url = new URL(webhook_url);
                 HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
                 con.addRequestProperty("Content-Type", "application/json");
                 con.addRequestProperty("meow", "nya");

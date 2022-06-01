@@ -16,7 +16,10 @@ import java.util.Map;
 
 public class PlayerMessage{
 
-    private String webhookUrl;
+    private String webhook_url;
+    private String server_name;
+    private String avatar_url;
+    private String channel_id;
     private Map<String, Object> obj;
 
 
@@ -25,20 +28,32 @@ public class PlayerMessage{
             Log.info(event.message);
             Yaml yml = new Yaml();
             obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
-            webhookUrl = obj.get("webhook_url").toString();
+            webhook_url = obj.get("webhook_url").toString();
+            channel_id = obj.get("channel_id").toString();
+            avatar_url = obj.get("avatar_url").toString();
+            server_name = obj.get("server_name").toString();
             Player player = event.player;
-            Administration.Config.showConnectMessages.set(false);
             String jsonBrut = "";
-            jsonBrut += "{\"embeds\": [{"
-                    + "\"description\": \"" + event.message + "\","
-                    + "\"title\": \"Написал\","
-                    + "\"color\": 15258703"
-                    + "}],"
-                    +"\"username\": \""+ player.name +"\","
-                    + "\"avatar\": \"https://media.discordapp.net/attachments/981128238766112808/981527456357974056/unknown.png\""
+            jsonBrut += "{\"embeds\": "
+                    + " \n["
+                    + "     \n{"
+                    + "         \n\"author\": {"
+                    + "         \n\"name\": \"" + player.name + "\","
+                    + "         \n\"icon_url\": \"https://github.com/Anuken/Mindustry/blob/master/core/assets-raw/sprites/units/gamma.png?raw=true\""
+                    + "     \n},"
+                    + "     \n\"title\": \"Написал\","
+                    + "     \n\"description\": \"" + event.message + "\","
+                    + "     \n\"color\": \"15258703\""
+                    + "     \n}"
+                    + " \n],"
+                    +"\"username\": \""+ server_name +"\","
+                    + "\"title\": \""+ player.name +"\","
+                    + "\"channel_id\": \""+ channel_id +"\","
+                    + "\"avatar_url\": \""+ avatar_url +"\""
                     + "}";
+
             try {
-                URL url = new URL(webhookUrl);
+                URL url = new URL(webhook_url);
                 HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
                 con.addRequestProperty("Content-Type", "application/json");
                 con.addRequestProperty("meow", "nya");

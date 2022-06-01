@@ -28,12 +28,12 @@ public class MeowlandPlugin extends Plugin {
 
     @Override
     public void init(){
+        Config con = new Config();
+        con.loadConfig();
         PlayerJoin join = new PlayerJoin();
         join.join();
         PlayerLeave leave = new PlayerLeave();
         leave.leave();
-        Config con = new Config();
-        con.loadConfig();
         webhookUrl = con.webhook_url;
         AdminCommands adminCommands = new AdminCommands();
         PlayerMessage message = new PlayerMessage();
