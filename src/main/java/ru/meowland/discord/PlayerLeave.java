@@ -40,7 +40,7 @@ public class PlayerLeave {
                     + "         \n\"name\": \"" + player.name + "\","
                     + "         \n\"icon_url\": \"https://github.com/Anuken/Mindustry/blob/master/core/assets-raw/sprites/units/gamma.png?raw=true\""
                     + "     \n},"
-                    + "     \n\"description\": \"Вышел\","
+                    + "     \n\"description\": \"leave\","
                     + "     \n\"color\": \"9109504\""
                     + "     \n}"
                     + " \n],"

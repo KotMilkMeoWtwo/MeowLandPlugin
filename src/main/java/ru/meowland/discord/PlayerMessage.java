@@ -40,7 +40,7 @@ public class PlayerMessage{
                     + "         \n\"name\": \"" + player.name + "\","
                     + "         \n\"icon_url\": \"https://github.com/Anuken/Mindustry/blob/master/core/assets-raw/sprites/units/gamma.png?raw=true\""
                     + "     \n},"
-                    + "     \n\"title\": \"Написал\","
+                    + "     \n\"title\": \"Send >>\","
                     + "     \n\"description\": \"" + event.message + "\","
                     + "     \n\"color\": \"15258703\""
                     + "     \n}"

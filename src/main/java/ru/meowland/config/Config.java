@@ -8,12 +8,23 @@ import java.util.Map;
 
 public class Config {
     private static String config = ""
+            + "\n#Plugin language en/ru"
+            + "\nlanguage: eng"
             + "#Discord integration settings"
             + "\nenable: true"
             + "\nwebhook_url: url"
             + "\nchannel_id: id"
             + "\navatar_url: url"
             + "\nserver_name: server name"
+            + "\n#Mindustry settings"
+            + "\n#Permissions."
+            + "\n#If it is true then the players will be able to use the command."
+            + "\n#If it is false then only admins will can able to use the command."
+            + "\ndespw: false"
+            + "\nspawn: false"
+            + "\nteam: false"
+            + "\nshiza: true"
+            + "\nrtv: true"
             + "\n"
             + "\n";
     private Map<String, Object> obj;
@@ -25,12 +36,12 @@ public class Config {
     public void loadConfig() {
         if(!Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").exists()){
             Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").writeString(config);
-            Log.info("Meowland: Конфиг сгенерирован");
+            Log.info("Meowland: config created");
         }else {
-            Log.info("Meowland: Конфиг загружен");
+            Log.info("Meowland: config loaded");
         }
 
-        Log.info("Meowland: Путь к конфигу MeowLand: " + Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").toString());
+        Log.info("Meowland: patch to config: " + Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").toString());
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         webhook_url = obj.get("webhook_url").toString();

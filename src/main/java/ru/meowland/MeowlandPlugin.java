@@ -18,6 +18,7 @@ import ru.meowland.discord.PlayerJoin;
 import ru.meowland.discord.PlayerLeave;
 import ru.meowland.config.Config;
 import ru.meowland.discord.PlayerMessage;
+import ru.meowland.discord.ServerLoaded;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -45,12 +46,15 @@ public class MeowlandPlugin extends Plugin {
         leave.leave();
         PlayerMessage message = new PlayerMessage();
         message.message();
+        ServerLoaded loaded = new ServerLoaded();
+        loaded.serverLoad();
         Log.info("Meowland: plugin started");
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         enable = obj.get("enable").toString();
         if(enable.equals("true")){
             Log.info("Meowland: discord integration is enable");
+
         }else {
             Log.info("Meowland: discord integration is disable");
         }
