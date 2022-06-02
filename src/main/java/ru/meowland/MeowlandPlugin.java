@@ -48,6 +48,7 @@ public class MeowlandPlugin extends Plugin {
 
         handler.<Player>register("despw", "", "Убивает всех юнитов на сервере", adminCommands::despw);
         handler.<Player>register("spawn", "<Unit> <Count> <Team>", "Спавнит нужного юнита", adminCommands::spawn);
+        handler.<Player>register("team", "<Team>", "меняет команду", adminCommands::team);
 
     }
 

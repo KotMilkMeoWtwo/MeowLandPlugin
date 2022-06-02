@@ -66,5 +66,26 @@ public class AdminCommands{
             return;
         }
     }
+    public void team(String[] args, Player player){
+        Team team;
+        if (args[0].equals("sharded")) {
+            team = Team.sharded;
+        } else if(args[0].equals("blue")){
+            team = Team.blue;
+        } else if(args[0].equals("crux")){
+            team = Team.crux;
+        } else if (args[0].equals("derelict")) {
+            team = Team.derelict;
+        } else if (args[0].equals("green")) {
+            team = Team.green;
+        } else if(args[0].equals("purple")){
+            team = Team.purple;
+        } else {
+            player.sendMessage("Есть команды: [yellow]sharded[], [blue]blue[], [red]crux[], [gray]derelict[], [green]green[], [purple]purple[].");
+            return;
+        }
+        player.team(team);
+
+    }
 
 }
