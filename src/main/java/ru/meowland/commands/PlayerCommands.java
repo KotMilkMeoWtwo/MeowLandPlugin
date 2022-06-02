@@ -24,8 +24,9 @@ public class PlayerCommands {
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         shiza = obj.get("shiza").toString();
+        String textshizi = String.join(" ", args);
         if((shiza.equals("false") && player.admin) || shiza.equals("true")){
-            player.sendMessage(args[0]);
+            player.sendMessage("Твоя шиза: " + textshizi);
         }else{
             player.sendMessage("[red]Ты не админ");
             return;
