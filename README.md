@@ -3,7 +3,7 @@
 This plugin is being developed for the meowland.ru server but anyone can use it.
 # Player commands
 
-*`/wave` - vote for wave skip. 
+* `/wave` - vote for wave skip. 
 * `/rtv` - vote for map change.
 * `/shiza <text...>` - send a message to yourself. 
 
