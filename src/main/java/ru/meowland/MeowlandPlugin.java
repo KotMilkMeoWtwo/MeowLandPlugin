@@ -31,6 +31,10 @@ public class MeowlandPlugin extends Plugin {
 
     AdminCommands adminCommands = new AdminCommands();
     PlayerCommands playerCommands = new PlayerCommands();
+
+    public MeowlandPlugin() {
+    }
+
     @Override
     public void init(){
         Config con = new Config();
@@ -42,11 +46,15 @@ public class MeowlandPlugin extends Plugin {
         PlayerMessage message = new PlayerMessage();
         message.message();
         Log.info("Meowland: plugin started");
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
+        enable = obj.get("enable").toString();
         if(enable.equals("true")){
             Log.info("Meowland: discord integration is enable");
         }else {
             Log.info("Meowland: discord integration is disable");
         }
+
     }
     @Override
     public void registerClientCommands(CommandHandler handler){

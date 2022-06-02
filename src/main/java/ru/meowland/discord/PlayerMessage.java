@@ -25,7 +25,7 @@ public class PlayerMessage{
         Events.on(EventType.PlayerChatEvent.class, event -> {
             Log.info(event.message);
             Yaml yml = new Yaml();
-            obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
+            obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
             webhook_url = obj.get("webhook_url").toString();
             channel_id = obj.get("channel_id").toString();
             avatar_url = obj.get("avatar_url").toString();
