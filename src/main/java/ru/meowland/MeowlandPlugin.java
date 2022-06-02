@@ -1,5 +1,6 @@
 package ru.meowland;
 
+import arc.Core;
 import arc.Events;
 import arc.files.Fi;
 import arc.util.CommandHandler;
@@ -10,6 +11,7 @@ import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.mod.Plugin;
 import mindustry.type.UnitType;
+import org.yaml.snakeyaml.Yaml;
 import ru.meowland.commands.AdminCommands;
 import ru.meowland.commands.PlayerCommands;
 import ru.meowland.discord.PlayerJoin;
@@ -18,11 +20,13 @@ import ru.meowland.config.Config;
 import ru.meowland.discord.PlayerMessage;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.logging.Handler;
 
 public class MeowlandPlugin extends Plugin {
 
-    private String webhookUrl;
+    private String enable;
+    private Map<String, Object> obj;
 
 
     AdminCommands adminCommands = new AdminCommands();
@@ -35,10 +39,14 @@ public class MeowlandPlugin extends Plugin {
         join.join();
         PlayerLeave leave = new PlayerLeave();
         leave.leave();
-        webhookUrl = con.webhook_url;
         PlayerMessage message = new PlayerMessage();
         message.message();
-        Log.info("Плагин Meowland запущен");
+        Log.info("Meowland: plugin started");
+        if(enable.equals("true")){
+            Log.info("Meowland: discord integration is enable");
+        }else {
+            Log.info("Meowland: discord integration is disable");
+        }
     }
     @Override
     public void registerClientCommands(CommandHandler handler){

@@ -2,9 +2,7 @@ package ru.meowland.discord;
 
 import arc.Core;
 import arc.Events;
-import arc.util.Log;
 import mindustry.game.EventType;
-import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.net.Administration;
 import org.yaml.snakeyaml.Yaml;
@@ -19,8 +17,9 @@ public class PlayerLeave {
     private String webhook_url;
     private String server_name;
     private String avatar_url;
-    private String channel_id;;
+    private String channel_id;
     private Map<String, Object> obj;
+    private String enable;
     public void leave(){
         Events.on(EventType.PlayerLeave.class, event ->{
             Yaml yml = new Yaml();
@@ -29,6 +28,7 @@ public class PlayerLeave {
             channel_id = obj.get("channel_id").toString();
             avatar_url = obj.get("avatar_url").toString();
             server_name = obj.get("server_name").toString();
+            enable = obj.get("enable").toString();
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
             String jsonBrut = "";
@@ -51,18 +51,20 @@ public class PlayerLeave {
                     + "}";
 
             try {
-                URL url = new URL(webhook_url);
-                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-                con.addRequestProperty("Content-Type", "application/json");
-                con.addRequestProperty("meow", "nya");
-                con.setDoOutput(true);
-                con.setRequestMethod("POST");
-                OutputStream stream = con.getOutputStream();
-                stream.write(jsonBrut.getBytes());
-                stream.flush();
-                stream.close();
-                con.getInputStream().close();
-                con.disconnect();
+                if(enable.equals("true")){
+                    URL url = new URL(webhook_url);
+                    HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+                    con.addRequestProperty("Content-Type", "application/json");
+                    con.addRequestProperty("meow", "nya");
+                    con.setDoOutput(true);
+                    con.setRequestMethod("POST");
+                    OutputStream stream = con.getOutputStream();
+                    stream.write(jsonBrut.getBytes());
+                    stream.flush();
+                    stream.close();
+                    con.getInputStream().close();
+                    con.disconnect();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -4,9 +4,7 @@ import arc.Core;
 import arc.Events;
 import arc.util.Log;
 import mindustry.game.EventType;
-import mindustry.gen.Call;
 import mindustry.gen.Player;
-import mindustry.net.Administration;
 import org.yaml.snakeyaml.Yaml;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -21,7 +19,7 @@ public class PlayerMessage{
     private String avatar_url;
     private String channel_id;
     private Map<String, Object> obj;
-
+    private String enable;
 
     public void message(){
         Events.on(EventType.PlayerChatEvent.class, event -> {
@@ -32,6 +30,7 @@ public class PlayerMessage{
             channel_id = obj.get("channel_id").toString();
             avatar_url = obj.get("avatar_url").toString();
             server_name = obj.get("server_name").toString();
+            enable = obj.get("enable").toString();
             Player player = event.player;
             String jsonBrut = "";
             jsonBrut += "{\"embeds\": "
@@ -53,18 +52,20 @@ public class PlayerMessage{
                     + "}";
 
             try {
-                URL url = new URL(webhook_url);
-                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-                con.addRequestProperty("Content-Type", "application/json");
-                con.addRequestProperty("meow", "nya");
-                con.setDoOutput(true);
-                con.setRequestMethod("POST");
-                OutputStream stream = con.getOutputStream();
-                stream.write(jsonBrut.getBytes());
-                stream.flush();
-                stream.close();
-                con.getInputStream().close();
-                con.disconnect();
+                if(enable.equals("true")){
+                    URL url = new URL(webhook_url);
+                    HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+                    con.addRequestProperty("Content-Type", "application/json");
+                    con.addRequestProperty("meow", "nya");
+                    con.setDoOutput(true);
+                    con.setRequestMethod("POST");
+                    OutputStream stream = con.getOutputStream();
+                    stream.write(jsonBrut.getBytes());
+                    stream.flush();
+                    stream.close();
+                    con.getInputStream().close();
+                    con.disconnect();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

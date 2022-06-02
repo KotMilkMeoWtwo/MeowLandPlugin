@@ -2,13 +2,11 @@ package ru.meowland.discord;
 
 import arc.Core;
 import arc.Events;
-import arc.util.Log;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.net.Administration;
 import org.yaml.snakeyaml.Yaml;
-import ru.meowland.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.OutputStream;
@@ -21,17 +19,16 @@ public class PlayerJoin {
     private String server_name;
     private String avatar_url;
     private String channel_id;
-
-    private Map<String, Object> obj;
+    private String enable;
 
     public void join(){
-        Config conf = new Config();
         Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
+        Map<String, Object> obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("config.yml").readString()));
         webhook_url = obj.get("webhook_url").toString();
         channel_id = obj.get("channel_id").toString();
         avatar_url = obj.get("avatar_url").toString();
         server_name = obj.get("server_name").toString();
+        enable = obj.get("enable").toString();
         Events.on(EventType.PlayerConnect.class, event ->{
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
@@ -54,18 +51,20 @@ public class PlayerJoin {
                     + "\"avatar_url\": \""+ avatar_url +"\""
                     + "}";
             try {
-                URL url = new URL(webhook_url);
-                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-                con.addRequestProperty("Content-Type", "application/json");
-                con.addRequestProperty("meow", "nya");
-                con.setDoOutput(true);
-                con.setRequestMethod("POST");
-                OutputStream stream = con.getOutputStream();
-                stream.write(jsonBrut.getBytes());
-                stream.flush();
-                stream.close();
-                con.getInputStream().close();
-                con.disconnect();
+                if(enable.equals("true")){
+                    URL url = new URL(webhook_url);
+                    HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+                    con.addRequestProperty("Content-Type", "application/json");
+                    con.addRequestProperty("meow", "nya");
+                    con.setDoOutput(true);
+                    con.setRequestMethod("POST");
+                    OutputStream stream = con.getOutputStream();
+                    stream.write(jsonBrut.getBytes());
+                    stream.flush();
+                    stream.close();
+                    con.getInputStream().close();
+                    con.disconnect();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
