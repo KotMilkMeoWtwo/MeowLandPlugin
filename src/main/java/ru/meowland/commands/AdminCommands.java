@@ -1,17 +1,26 @@
 package ru.meowland.commands;
 
+import arc.Core;
 import mindustry.Vars;
 import mindustry.game.Team;
-import mindustry.gen.Groups;
-import mindustry.gen.Player;
-import mindustry.gen.Unit;
-import mindustry.gen.Unitc;
+import mindustry.gen.*;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
+import org.yaml.snakeyaml.Yaml;
+
+import java.util.Map;
 
 public class AdminCommands{
+
+    private String teamm, spawn, despw;
+    private Map<String, Object> obj;
+
     public void despw(String[] args, Player player){
-        if(player.admin){
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
+        despw = obj.get("despw").toString();
+
+        if((despw.equals("false") && player.admin) || despw.equals("true")){
             Groups.unit.each(Unitc::kill);
             player.sendMessage("Все юниты померли");
         }
@@ -21,7 +30,10 @@ public class AdminCommands{
         }
     }
     public void spawn(String[] args, Player player){
-        if(player.admin){
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
+        spawn = obj.get("spawn").toString();
+        if((spawn.equals("false") && player.admin) || spawn.equals("true")){
             UnitType unit = Vars.content.units().find(b -> b.name.equals(args[0]));
             int count;
             try {
@@ -68,8 +80,12 @@ public class AdminCommands{
         }
     }
     public void team(String[] args, Player player){
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         Team team;
-        if(player.admin) {
+        teamm = obj.get("team").toString();
+
+        if((teamm.equals("false") && player.admin) || teamm.equals("true")){
             if (args[0].equals("sharded")) {
                 team = Team.sharded;
             } else if (args[0].equals("blue")) {

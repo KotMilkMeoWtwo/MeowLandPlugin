@@ -10,7 +10,7 @@ public class Config {
     private static String config = ""
             + "\n#Plugin language en/ru"
             + "\nlanguage: eng"
-            + "#Discord integration settings"
+            + "\n#Discord integration settings"
             + "\nenable: true"
             + "\nwebhook_url: url"
             + "\nchannel_id: id"
@@ -25,7 +25,7 @@ public class Config {
             + "\nteam: false"
             + "\nshiza: true"
             + "\nrtv: true"
-            + "\n"
+            + "\nwave: true"
             + "\n";
     private Map<String, Object> obj;
 

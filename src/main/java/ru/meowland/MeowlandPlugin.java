@@ -65,6 +65,8 @@ public class MeowlandPlugin extends Plugin {
         AdminCommands adminCommands = new AdminCommands();
         handler.<Player>register("shiza", "<text...>", "позволяет разговаривать с самим собой. никто, кроме консоли, не узанет, что ты тут пишешь", playerCommands::shiza);
         handler.<Player>register("rtv", "Проголосовать за смену карты", playerCommands::rtv);
+        handler.<Player>register("wave", "Запускает волну (после голосования)", playerCommands::wave);
+
 
         handler.<Player>register("despw", "", "Убивает всех юнитов на сервере", adminCommands::despw);
         handler.<Player>register("spawn", "<Unit> <Count> <Team>", "Спавнит нужного юнита", adminCommands::spawn);
