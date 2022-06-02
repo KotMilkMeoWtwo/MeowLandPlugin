@@ -9,7 +9,7 @@ import java.util.Map;
 public class Config {
     private static String config = ""
             + "\n#Plugin language en/ru"
-            + "\nlanguage: eng"
+            + "\nlanguage: en"
             + "\n#Discord integration settings"
             + "\nenable: true"
             + "\nwebhook_url: url"
