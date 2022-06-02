@@ -21,6 +21,11 @@ dependencies{
     implementation 'org.yaml:snakeyaml:1.30'
 
 }
+compileJava {
+    options.encoding = 'UTF8'
+}
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 jar{
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
