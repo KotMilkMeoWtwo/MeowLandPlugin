@@ -1,17 +1,23 @@
 #Meowland plugin
-\nThis plugin is being developed for the meowland.ru server but anyone can use it.
-\n#Player commands:
+
+This plugin is being developed for the meowland.ru server but anyone can use it.
+#Player commands
+
 *`/wave` - vote for wave skip. 
 * `/rtv` - vote for map change.
 * `/shiza <text...>` - send a message to yourself. 
-\n#Admin commands:
+#Admin commands
+
 * `/spawn <Unit> <Count> <Team>` - spawn units.
 * `/team <Team>` - change your team.
 * `/despw` - kill all units.
-#Server commands:
-* `meowreload` - reload plugin.
-\n#Permissions
-\nAll command permissions can be changed in the config (config/mods/Meowland/config.yml)
+#Server commands
+
+* `meowreload` - reload plugin. (in progress)
+#Permissions
+
+All command permissions can be changed in the config (config/mods/Meowland/config.yml)
+
 ```yml
 #Permissions.
 #If it is true then the players will be able to use the command.
@@ -23,8 +29,10 @@ shiza: true
 rtv: true
 wave: true 
 ```
-\n#Discord integration
-\nThe output of messages and events to the discord is configured in the config (config/mods/MeowLand/config.yml)
+
+#Discord integration
+
+The output of messages and events to the discord is configured in the config (config/mods/MeowLand/config.yml)
 ```yml
 #Discord integration settings
 enable: true
