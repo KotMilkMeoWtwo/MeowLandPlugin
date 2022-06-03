@@ -12,6 +12,7 @@ This plugin is being developed for the meowland.ru server but anyone can use it.
 * `/spawn <Unit> <Count> <Team>` - spawn units.
 * `/team <Team>` - change your team.
 * `/despw` - kill all units.
+* `/spawncore <small|medium|large>` - spawn core.
 
 # Server commands
 
@@ -30,6 +31,7 @@ team: false
 shiza: true
 rtv: true
 wave: true 
+spawncore: false
 ```
 
 # Discord integration

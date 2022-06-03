@@ -26,7 +26,7 @@ public class Config {
             + "\nshiza: true"
             + "\nrtv: true"
             + "\nwave: true"
-            + "\n";
+            + "\nspawncore: false";
     private Map<String, Object> obj;
 
     public String webhook_url;

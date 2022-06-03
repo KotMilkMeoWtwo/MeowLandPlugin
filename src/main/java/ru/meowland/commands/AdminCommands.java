@@ -2,6 +2,7 @@ package ru.meowland.commands;
 
 import arc.Core;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.type.UnitType;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class AdminCommands{
 
-    private String teamm, spawn, despw;
+    private String teamm, spawn, despw, spawncore;
     private Map<String, Object> obj;
 
     public void despw(String[] args, Player player){
@@ -73,8 +74,7 @@ public class AdminCommands{
             }
 
 
-        }
-        else {
+        } else {
             player.sendMessage("[red]Ты не админ");
             return;
         }
@@ -102,11 +102,38 @@ public class AdminCommands{
                 player.sendMessage("Есть команды: [yellow]sharded[], [blue]blue[], [red]crux[], [gray]derelict[], [green]green[], [purple]purple[].");
                 return;
             }
+            player.sendMessage("[green]Сексесфул");
             player.team(team);
         }else{
             player.sendMessage("[red]Ты не админ");
             return;
         }
+    }
+    public void spawncore(String[] args, Player player){
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
+        spawncore = obj.get("spawncore").toString();
+        if((spawncore.equals("false") && player.admin) || spawncore.equals("true")){
+            Block core;
+            if (args[0].equals("small")){
+                core = Blocks.coreShard;
+            } else if (args[0].equals("medium")) {
+                core = Blocks.coreFoundation;
+            } else if (args[0].equals("large")) {
+                core = Blocks.coreNucleus;
+            }else {
+                core = Blocks.coreShard;
+            }
+            player.sendMessage("[green]Сексесфул");
+
+            Call.constructFinish(player.tileOn(), core, player.unit(), (byte)0, player.team(), false);
+        }else {
+            player.sendMessage("[red]Ты не админ");
+            return;
+        }
+
+
+
     }
 
 }
