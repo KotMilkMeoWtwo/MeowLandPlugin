@@ -33,9 +33,10 @@ public class MeowlandPlugin extends Plugin {
 
     @Override
     public void init(){
-        Bundle.init();
         Config con = new Config();
         con.loadConfig();
+        Bundle.init();
+
         PlayerJoin join = new PlayerJoin();
         join.join();
         PlayerLeave leave = new PlayerLeave();

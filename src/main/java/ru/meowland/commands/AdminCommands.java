@@ -38,10 +38,10 @@ public class AdminCommands{
         }
     }
     public void spawn(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        spawn = obj.get("spawn").toString();
-        if((spawn.equals("false") && player.admin) || spawn.equals("true")){
+        //Yaml yml = new Yaml();
+        //obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
+        //spawn = obj.get("spawn").toString();
+        if((Config.get("spawn").equals("false") && player.admin) || Config.get("spawn").equals("true")){
             UnitType unit = Vars.content.units().find(b -> b.name.equals(args[0]));
             int count;
             try {
