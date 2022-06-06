@@ -32,7 +32,7 @@ public class Bundle {
         Log.info("init b");
         generate();
 
-        seelctedLang = Config.get("lang");
+        seelctedLang = Config.get("language");
         file = langDir.child(seelctedLang + ".properties");
 
         properties = new ObjectMap<>();
@@ -44,7 +44,7 @@ public class Bundle {
     public static void generate(){
         for (String lang : langList){
             Log.info("meow");
-            final String langPath = "land/" + lang + ".properties";
+            final String langPath = "lang/" + lang + ".properties";
             final Fi file = MeowlandPlugin.pluginDir.child(langPath);
 
             if(file.exists()){
@@ -59,7 +59,7 @@ public class Bundle {
 
         int i = 0;
         for(String to : replace){
-            value = value.replace("{"+i+"}",to);
+            value = value.replace("{" +i+ "}",to);
             i++;
         }
         return value;

@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class Config {
     private static String config = ""
-            + "\n#Plugin language en/ru"
-            + "\nlanguage: en"
+            + "\n#Plugin language en_US/ru_RU"
+            + "\nlanguage: en_US"
             + "\n#Discord integration settings"
             + "\nenable: true"
             + "\nwebhook_url: url"
@@ -55,6 +55,8 @@ public class Config {
     }
 
     public static String get(String meow){
+        Yaml yml = new Yaml();
+        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         return obj.get(meow).toString();
     }
 
