@@ -27,7 +27,7 @@ public class Config {
             + "\nrtv: true"
             + "\nwave: true"
             + "\nspawncore: false";
-    private Map<String, Object> obj;
+    private static Map<String, Object> obj;
 
     public String webhook_url;
     public String channel_id;
@@ -52,6 +52,10 @@ public class Config {
 
     public Config() {
         this.obj = obj;
+    }
+
+    public static String get(String meow){
+        return obj.get(meow).toString();
     }
 
 

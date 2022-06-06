@@ -1,6 +1,8 @@
 package ru.meowland.commands;
 
 import arc.Core;
+import arc.files.Fi;
+import arc.util.Log;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.game.Team;
@@ -8,13 +10,21 @@ import mindustry.gen.*;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
 import org.yaml.snakeyaml.Yaml;
+import ru.meowland.MeowlandPlugin;
+import ru.meowland.config.Bundle;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class AdminCommands{
 
     private String teamm, spawn, despw, spawncore;
     private Map<String, Object> obj;
+    private Bundle bundle;
+    Locale locale = new Locale("ru");
+
+
 
     public void despw(String[] args, Player player){
         Yaml yml = new Yaml();
@@ -26,8 +36,7 @@ public class AdminCommands{
             player.sendMessage("Все юниты померли");
         }
         else {
-            player.sendMessage("[red]Ты не админ");
-            return;
+            Log.info(Bundle.get("test.test"));
         }
     }
     public void spawn(String[] args, Player player){
@@ -75,7 +84,7 @@ public class AdminCommands{
 
 
         } else {
-            player.sendMessage("[red]Ты не админ");
+            player.sendMessage(bundle.get("commands.permission-denied"));
             return;
         }
     }
@@ -105,7 +114,7 @@ public class AdminCommands{
             player.sendMessage("[green]Сексесфул");
             player.team(team);
         }else{
-            player.sendMessage("[red]Ты не админ");
+            player.sendMessage(bundle.get("commands.permission-denied"));
             return;
         }
     }
