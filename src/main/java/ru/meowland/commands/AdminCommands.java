@@ -21,15 +21,9 @@ import java.util.ResourceBundle;
 
 public class AdminCommands{
 
-    private String teamm, spawn, despw, spawncore;
-    private Map<String, Object> obj;
 
     public void despw(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        despw = obj.get("despw").toString();
-
-        if((despw.equals("false") && player.admin) || despw.equals("true")){
+        if((Config.get("despw").equals("false") && player.admin) || Config.get("despw").equals("true")){
             Groups.unit.each(Unitc::kill);
             player.sendMessage(Bundle.get("commands.successful"));
         }
@@ -38,9 +32,6 @@ public class AdminCommands{
         }
     }
     public void spawn(String[] args, Player player){
-        //Yaml yml = new Yaml();
-        //obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        //spawn = obj.get("spawn").toString();
         if((Config.get("spawn").equals("false") && player.admin) || Config.get("spawn").equals("true")){
             UnitType unit = Vars.content.units().find(b -> b.name.equals(args[0]));
             int count;
@@ -67,8 +58,8 @@ public class AdminCommands{
                 player.sendMessage(Bundle.get("commands.teams"));
                 return;
             }
-            if(count > 15){
-                player.sendMessage(Bundle.get("commands.spawn.limit" + Config.get("spawn-limit")));
+            if(count > Config.getInt(Integer.parseInt("spawn-limit"))){
+                player.sendMessage(Bundle.get("commands.spawn.limit") + Config.get("spawn-limit"));
                 return;
             }
             if(unit != null){
@@ -77,7 +68,7 @@ public class AdminCommands{
                 }
                 player.sendMessage(Bundle.get("commands.successful"));
             }else {
-                player.sendMessage("Есть юниты: [accent]dagger, mace, fortress, scepter, reign, nova, pulsar, quasar, vela, corvus, crawler, atrax, spiroct, arkyid, toxopid, mono, poly, mega, quad, oct, flare, eclipse, horizon, zenith, antumbra, risso, minke, bryde, sei, omura");
+                player.sendMessage(Bundle.get("commands.units"));
             }
 
 
@@ -87,12 +78,9 @@ public class AdminCommands{
         }
     }
     public void team(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         Team team;
-        teamm = obj.get("team").toString();
 
-        if((teamm.equals("false") && player.admin) || teamm.equals("true")){
+        if((Config.get("team").equals("false") && player.admin) || Config.get("team").equals("true")){
             if (args[0].equals("sharded")) {
                 team = Team.sharded;
             } else if (args[0].equals("blue")) {
@@ -117,10 +105,7 @@ public class AdminCommands{
         }
     }
     public void spawncore(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        spawncore = obj.get("spawncore").toString();
-        if((spawncore.equals("false") && player.admin) || spawncore.equals("true")){
+        if((Config.get("spawncore").equals("false") && player.admin) || Config.get("spawncore").equals("true")){
             Block core;
             if (args[0].equals("small")){
                 core = Blocks.coreShard;

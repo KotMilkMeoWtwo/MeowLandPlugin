@@ -4,6 +4,7 @@ import arc.Core;
 import arc.util.Log;
 import org.yaml.snakeyaml.Yaml;
 
+import java.security.PublicKey;
 import java.util.Map;
 
 public class Config {
@@ -65,6 +66,11 @@ public class Config {
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         return obj.get(meow).toString();
+    }
+    public static int getInt(int meow){
+        Yaml yml = new Yaml();
+        obj = yml.load(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString());
+        return (int) obj.get(obj);
     }
 
 
