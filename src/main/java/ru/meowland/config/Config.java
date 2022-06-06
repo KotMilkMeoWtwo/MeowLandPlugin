@@ -26,7 +26,14 @@ public class Config {
             + "\nshiza: true"
             + "\nrtv: true"
             + "\nwave: true"
-            + "\nspawncore: false";
+            + "\nspawncore: false"
+            + "\n#Commands settings"
+            + "\nspawn-limit: 15"
+            + "\n"
+            + "\n"
+            + "\n"
+            + "\n"
+            + "\n";
     private static Map<String, Object> obj;
 
     public String webhook_url;

@@ -2,6 +2,7 @@ package ru.meowland.commands;
 
 import arc.Core;
 import arc.files.Fi;
+import arc.util.CommandHandler;
 import arc.util.Log;
 import mindustry.Vars;
 import mindustry.content.Blocks;
@@ -12,6 +13,7 @@ import mindustry.world.Block;
 import org.yaml.snakeyaml.Yaml;
 import ru.meowland.MeowlandPlugin;
 import ru.meowland.config.Bundle;
+import ru.meowland.config.Config;
 
 import java.util.Locale;
 import java.util.Map;
@@ -21,10 +23,6 @@ public class AdminCommands{
 
     private String teamm, spawn, despw, spawncore;
     private Map<String, Object> obj;
-    private Bundle bundle;
-    Locale locale = new Locale("ru");
-
-
 
     public void despw(String[] args, Player player){
         Yaml yml = new Yaml();
@@ -33,7 +31,7 @@ public class AdminCommands{
 
         if((despw.equals("false") && player.admin) || despw.equals("true")){
             Groups.unit.each(Unitc::kill);
-            player.sendMessage("Все юниты померли");
+            player.sendMessage(Bundle.get("commands.successful"));
         }
         else {
             player.sendMessage(Bundle.get("commands.permission-denied"));
@@ -49,7 +47,7 @@ public class AdminCommands{
             try {
                 count = Integer.parseInt(args[1]);
             }catch (NumberFormatException e){
-                player.sendMessage("[red]Число должно быть числом");
+                player.sendMessage(Bundle.get("commands.int-is-no-int"));
                 return;
             }
             Team team;
@@ -66,25 +64,25 @@ public class AdminCommands{
             } else if(args[2].equals("purple")){
                 team = Team.purple;
             } else {
-                player.sendMessage("Есть команды: [yellow]sharded[], [blue]blue[], [red]crux[], [gray]derelict[], [green]green[], [purple]purple[].");
+                player.sendMessage(Bundle.get("commands.teams"));
                 return;
             }
             if(count > 15){
-                player.sendMessage("Лимит для спавна 15 юнитов");
+                player.sendMessage(Bundle.get("commands.spawn.limit" + Config.get("spawn-limit")));
                 return;
             }
             if(unit != null){
                 for (int i = 0; count > i; i++) {
                     Unit unit1 = unit.spawn(team, player.x, player.y);
                 }
-                player.sendMessage("[green]Сексесфул");
+                player.sendMessage(Bundle.get("commands.successful"));
             }else {
                 player.sendMessage("Есть юниты: [accent]dagger, mace, fortress, scepter, reign, nova, pulsar, quasar, vela, corvus, crawler, atrax, spiroct, arkyid, toxopid, mono, poly, mega, quad, oct, flare, eclipse, horizon, zenith, antumbra, risso, minke, bryde, sei, omura");
             }
 
 
         } else {
-            player.sendMessage(bundle.get("commands.permission-denied"));
+            player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
     }
@@ -108,13 +106,13 @@ public class AdminCommands{
             } else if (args[0].equals("purple")) {
                 team = Team.purple;
             } else {
-                player.sendMessage("Есть команды: [yellow]sharded[], [blue]blue[], [red]crux[], [gray]derelict[], [green]green[], [purple]purple[].");
+                player.sendMessage(Bundle.get("commands.teams"));
                 return;
             }
-            player.sendMessage("[green]Сексесфул");
+            player.sendMessage(Bundle.get("commands.successful"));
             player.team(team);
         }else{
-            player.sendMessage(bundle.get("commands.permission-denied"));
+            player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
     }
@@ -133,11 +131,11 @@ public class AdminCommands{
             }else {
                 core = Blocks.coreShard;
             }
-            player.sendMessage("[green]Сексесфул");
+            player.sendMessage(Bundle.get("commands.successful"));
 
             Call.constructFinish(player.tileOn(), core, player.unit(), (byte)0, player.team(), false);
         }else {
-            player.sendMessage("[red]Ты не админ");
+            player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
 
