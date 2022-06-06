@@ -36,7 +36,7 @@ public class AdminCommands{
             player.sendMessage("Все юниты померли");
         }
         else {
-            Log.info(Bundle.get("test.test"));
+            player.sendMessage(Bundle.get("commands.permission-denied"));
         }
     }
     public void spawn(String[] args, Player player){
