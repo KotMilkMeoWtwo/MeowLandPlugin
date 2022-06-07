@@ -3,6 +3,7 @@ package ru.meowland;
 import arc.files.Fi;
 import arc.util.CommandHandler;
 import arc.util.Log;
+import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.mod.Plugin;
 import ru.meowland.commands.AdminCommands;
@@ -14,12 +15,7 @@ import ru.meowland.discord.PlayerLeave;
 import ru.meowland.discord.PlayerMessage;
 import ru.meowland.discord.ServerLoaded;
 
-import java.util.Map;
-
 public class MeowlandPlugin extends Plugin {
-
-    private String enable;
-    private Map<String, Object> obj;
 
 
     AdminCommands adminCommands = new AdminCommands();
@@ -49,7 +45,6 @@ public class MeowlandPlugin extends Plugin {
         }else {
             Log.info("Meowland: discord integration is disable");
         }
-
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
