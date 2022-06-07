@@ -1,12 +1,10 @@
 package ru.meowland;
 
-import arc.Core;
 import arc.files.Fi;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import mindustry.gen.Player;
 import mindustry.mod.Plugin;
-import org.yaml.snakeyaml.Yaml;
 import ru.meowland.commands.AdminCommands;
 import ru.meowland.commands.PlayerCommands;
 import ru.meowland.config.Bundle;
@@ -46,10 +44,7 @@ public class MeowlandPlugin extends Plugin {
         ServerLoaded loaded = new ServerLoaded();
         loaded.serverLoad();
         Log.info("Meowland: plugin started");
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        enable = obj.get("enable").toString();
-        if(enable.equals("true")){
+        if(Config.get("enable").equals("true")){
             Log.info("Meowland: discord integration is enable");
         }else {
             Log.info("Meowland: discord integration is disable");

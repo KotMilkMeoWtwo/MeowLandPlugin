@@ -15,9 +15,7 @@ This plugin is being developed for the meowland.ru server but anyone can use it.
 * `/despw` - kill all units.
 * `/spawncore <small|medium|large>` - spawn core.
 
-### Server commands
 
-* `meowreload` - reload plugin. (in progress)
 ### Permissions
 
 All command permissions can be changed in the config (config/mods/Meowland/config.yml)

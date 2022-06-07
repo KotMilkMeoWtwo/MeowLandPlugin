@@ -1,15 +1,14 @@
 package ru.meowland.commands;
 
-import arc.Core;
 import arc.Events;
 import mindustry.Vars;
 import mindustry.game.EventType;
 import mindustry.game.Team;
-import mindustry.game.Waves;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
-import org.yaml.snakeyaml.Yaml;
+import ru.meowland.config.Bundle;
+import ru.meowland.config.Config;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -18,29 +17,21 @@ public class PlayerCommands {
     private static double ratio = 0.6;
     private HashSet<String> rvotes = new HashSet<>();
     private HashSet<String> wvotes = new HashSet<>();
-    private Map<String, Object> obj;
-    private String shiza, rtv, wave;
     public void shiza(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        shiza = obj.get("shiza").toString();
         String textshizi = String.join(" ", args);
-        if((shiza.equals("false") && player.admin) || shiza.equals("true")){
-            player.sendMessage("Твоя шиза: " + textshizi);
+        if((Config.get("shiza").equals("false") && player.admin) || Config.get("shiza").equals("true")){
+            player.sendMessage(Bundle.get("commands.shiza") + textshizi);
         }else{
-            player.sendMessage("[red]Ты не админ");
+            player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
     }
     public void rtv(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        rtv = obj.get("rtv").toString();
-        if((rtv.equals("false") && player.admin) || rtv.equals("true")){
+        if((Config.get("rtv").equals("false") && player.admin) || Config.get("rtv").equals("true")){
             this.rvotes.add(player.uuid());
             int cur = this.rvotes.size();
             int req = (int) Math.ceil(ratio * Groups.player.size());
-            Call.sendMessage("[navy]RTV[]: " + player.name + "[]голосует за смену карты [green]" + cur + "[] голос(ов;a), из [green]" + req);
+            Call.sendMessage("[navy]RTV[]: " + player.name + Bundle.get("commands.votes") + "[green]" + cur + ". " + Bundle.get("commands.votes.for") + " [green]" + req);
             if(cur < req){
                 return;
             }
@@ -48,27 +39,24 @@ public class PlayerCommands {
             Call.sendMessage("[navy]RTV[]: голоса приняты, смена карты");
             Events.fire(new EventType.GameOverEvent(Team.crux));
         }else{
-            player.sendMessage("[red]Ты не админ");
+            player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
     }
     public void wave(String[] args, Player player){
-        Yaml yml = new Yaml();
-        obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        wave = obj.get("wave").toString();
-        if((wave.equals("false") && player.admin) || wave.equals("true")){
+        if((Config.get("wave").equals("false") && player.admin) || Config.get("wave").equals("true")){
             this.wvotes.add(player.uuid());
             int cur = this.wvotes.size();
             int req = (int) Math.ceil(ratio * Groups.player.size());
-            Call.sendMessage("[#39d4e6]Wave: " + player.name + "[] []голосует за смену волны [green]" + cur + "[] голос(ов:a), из [green]" + req);
+            Call.sendMessage("[#39d4e6]Wave: " + player.name + Bundle.get("commands.votes") + "[green]" + cur + ". " + Bundle.get("commands.votes.for") + " [green]" + req);
             if(cur < req){
                 return;
             }
             this.wvotes.clear();
-            Call.sendMessage("[#39d4e6]Wave: []голоса приняты,  пропуск вылны");
+            Call.sendMessage("[#39d4e6]Wave: " + Bundle.get("commands.wave.successful"));
             Vars.logic.skipWave();
         }else{
-            player.sendMessage("[red]Ты не админ");
+            player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
 
