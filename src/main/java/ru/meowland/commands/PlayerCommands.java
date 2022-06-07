@@ -36,7 +36,7 @@ public class PlayerCommands {
                 return;
             }
             this.rvotes.clear();
-            Call.sendMessage("[navy]RTV[]: голоса приняты, смена карты");
+            Call.sendMessage("[navy]RTV[]: " + Bundle.get("command.rtv.successful"));
             Events.fire(new EventType.GameOverEvent(Team.crux));
         }else{
             player.sendMessage(Bundle.get("commands.permission-denied"));
