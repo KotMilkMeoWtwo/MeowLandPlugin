@@ -49,15 +49,15 @@ public class MeowlandPlugin extends Plugin {
     @Override
     public void registerClientCommands(CommandHandler handler){
         AdminCommands adminCommands = new AdminCommands();
-        handler.<Player>register("shiza", "<text...>", "позволяет разговаривать с самим собой. никто, кроме консоли, не узанет, что ты тут пишешь", playerCommands::shiza);
-        handler.<Player>register("rtv", "Проголосовать за смену карты", playerCommands::rtv);
-        handler.<Player>register("wave", "Запускает волну (после голосования)", playerCommands::wave);
+        handler.<Player>register("shiza", Bundle.get("command.shiza.usage"), Bundle.get("command.shiza.dsc"), playerCommands::shiza);
+        handler.<Player>register("rtv", Bundle.get("command.rtv.dsc"), playerCommands::rtv);
+        handler.<Player>register("wave", Bundle.get("command.wave.desc"), playerCommands::wave);
 
 
-        handler.<Player>register("despw", "", "Убивает всех юнитов на сервере", adminCommands::despw);
-        handler.<Player>register("spawn", "<Unit> <Count> <Team>", "Спавнит нужного юнита", adminCommands::spawn);
-        handler.<Player>register("team", "<Team>", "меняет команду", adminCommands::team);
-        handler.<Player>register("spawncore", "<small|medium|large>", "Спавнит ядро", adminCommands::spawncore);
+        handler.<Player>register("despw",  Bundle.get("command.despw.dsc"), adminCommands::despw);
+        handler.<Player>register("spawn", Bundle.get("command.spawn.usage"), Bundle.get("command.spawn.desc"), adminCommands::spawn);
+        handler.<Player>register("team", Bundle.get("command.team.usage"), Bundle.get("command.team.desc"), adminCommands::team);
+        handler.<Player>register("spawncore", Bundle.get("command.spawncore.usage"), Bundle.get("command.spawncore.desc"), adminCommands::spawncore);
 
     }
 
