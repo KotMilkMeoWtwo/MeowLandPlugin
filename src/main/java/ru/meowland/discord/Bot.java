@@ -22,7 +22,7 @@ public class Bot {
             builder.build();
             Events.on(EventType.PlayerConnect.class, event ->{
                 Player player = event.player;
-                TextChannel channel =  Configя.getChannel("channel_id");
+                TextChannel channel =  Config.getChannel("channel_id");
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setAuthor(player.name);
                 embed.setTitle(Config.get("server_name"));
