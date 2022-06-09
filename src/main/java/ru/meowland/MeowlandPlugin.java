@@ -3,17 +3,15 @@ package ru.meowland;
 import arc.files.Fi;
 import arc.util.CommandHandler;
 import arc.util.Log;
-import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.mod.Plugin;
 import ru.meowland.commands.AdminCommands;
 import ru.meowland.commands.PlayerCommands;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
-import ru.meowland.discord.PlayerJoin;
-import ru.meowland.discord.PlayerLeave;
-import ru.meowland.discord.PlayerMessage;
-import ru.meowland.discord.ServerLoaded;
+import ru.meowland.discord.*;
+
+import javax.security.auth.login.LoginException;
 
 public class MeowlandPlugin extends Plugin {
 
@@ -31,19 +29,26 @@ public class MeowlandPlugin extends Plugin {
         con.loadConfig();
         Bundle.init();
 
-        PlayerJoin join = new PlayerJoin();
+
+        Bot bot = new Bot();
+        try {
+            bot.start();
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        }
+        WebhookPlayerJoin join = new WebhookPlayerJoin();
         join.join();
-        PlayerLeave leave = new PlayerLeave();
+        WebhookPlayerLeave leave = new WebhookPlayerLeave();
         leave.leave();
-        PlayerMessage message = new PlayerMessage();
+        WebhookPlayerMessage message = new WebhookPlayerMessage();
         message.message();
-        ServerLoaded loaded = new ServerLoaded();
+        WebhookServerLoaded loaded = new WebhookServerLoaded();
         loaded.serverLoad();
         Log.info("Meowland: plugin started");
-        if(Config.get("enable").equals("true")){
-            Log.info("Meowland: discord integration is enable");
+        if(Config.get("webhook_enable").equals("true")){
+            Log.info("Meowland: discord webhook is enable");
         }else {
-            Log.info("Meowland: discord integration is disable");
+            Log.info("Meowland: discord webhook is disable");
         }
     }
     @Override

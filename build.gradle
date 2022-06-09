@@ -19,7 +19,7 @@ dependencies{
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
     implementation("club.minnced:discord-webhooks:0.8.0")
     implementation 'org.yaml:snakeyaml:1.30'
-    implementation("net.dv8tion:JDA:v5.0.0-alpha.12")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.12")
 
 }
 compileJava {

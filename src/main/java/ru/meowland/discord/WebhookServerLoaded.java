@@ -4,16 +4,16 @@ import arc.Core;
 import arc.Events;
 import arc.util.Log;
 import mindustry.game.EventType;
-import mindustry.gen.Player;
 import mindustry.net.Administration;
 import org.yaml.snakeyaml.Yaml;
+import ru.meowland.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Map;
 
-public class ServerLoaded {
+public class WebhookServerLoaded {
 
     private Map<String, Object> obj;
     private String enable;
@@ -26,7 +26,6 @@ public class ServerLoaded {
         Events.on(EventType.ServerLoadEvent.class, event ->{
             Yaml yml = new Yaml();
             obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-            enable = obj.get("enable").toString();
             channel_id = obj.get("channel_id").toString();
             avatar_url = obj.get("avatar_url").toString();
             webhook_url = obj.get("webhook_url").toString();
@@ -46,7 +45,8 @@ public class ServerLoaded {
                     + "\"avatar_url\": \""+ avatar_url +"\""
                     + "}";
             try {
-                if(enable.equals("true")){
+                if(Config.get("webhook_enable").equals("true")){
+                    Log.info("mew");
                     URL url = new URL(webhook_url);
                     HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
                     con.addRequestProperty("Content-Type", "application/json");

@@ -6,13 +6,14 @@ import arc.util.Log;
 import mindustry.game.EventType;
 import mindustry.gen.Player;
 import org.yaml.snakeyaml.Yaml;
+import ru.meowland.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Map;
 
-public class PlayerMessage{
+public class WebhookPlayerMessage {
 
     private String webhook_url;
     private String server_name;
@@ -33,7 +34,6 @@ public class PlayerMessage{
                 channel_id = obj.get("channel_id").toString();
                 avatar_url = obj.get("avatar_url").toString();
                 server_name = obj.get("server_name").toString();
-                enable = obj.get("enable").toString();
                 Player player = event.player;
                 String jsonBrut = "";
                 jsonBrut += "{\"embeds\": "
@@ -55,7 +55,7 @@ public class PlayerMessage{
                         + "}";
 
                 try {
-                    if(enable.equals("true")){
+                    if(Config.get("webhook_enable").equals("true")){
                         URL url = new URL(webhook_url);
                         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
                         con.addRequestProperty("Content-Type", "application/json");
