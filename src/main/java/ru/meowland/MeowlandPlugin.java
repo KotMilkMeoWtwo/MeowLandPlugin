@@ -3,6 +3,7 @@ package ru.meowland;
 import arc.files.Fi;
 import arc.util.CommandHandler;
 import arc.util.Log;
+import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.mod.Plugin;
 import ru.meowland.commands.AdminCommands;
@@ -11,12 +12,18 @@ import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 import ru.meowland.discord.*;
 
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.security.auth.login.LoginException;
+import java.io.InputStreamReader;
 
 public class MeowlandPlugin extends Plugin {
 
 
     AdminCommands adminCommands = new AdminCommands();
+
     PlayerCommands playerCommands = new PlayerCommands();
     public static final Fi pluginDir = new Fi("./config/mods/MeowLand");
 
@@ -28,11 +35,9 @@ public class MeowlandPlugin extends Plugin {
         Config con = new Config();
         con.loadConfig();
         Bundle.init();
-
-
         Bot bot = new Bot();
         try {
-            bot.start();
+            bot.bot();
         } catch (LoginException e) {
             throw new RuntimeException(e);
         }
@@ -59,6 +64,7 @@ public class MeowlandPlugin extends Plugin {
         handler.<Player>register("wave", Bundle.get("command.wave.desc"), playerCommands::wave);
 
 
+        handler.<Player>register("js", "<code>", "run js code", adminCommands::js);
         handler.<Player>register("despw",  Bundle.get("command.despw.dsc"), adminCommands::despw);
         handler.<Player>register("spawn", Bundle.get("command.spawn.usage"), Bundle.get("command.spawn.desc"), adminCommands::spawn);
         handler.<Player>register("team", Bundle.get("command.team.usage"), Bundle.get("command.team.desc"), adminCommands::team);

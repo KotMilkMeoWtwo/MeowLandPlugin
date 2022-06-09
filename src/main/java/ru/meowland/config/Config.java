@@ -2,9 +2,9 @@ package ru.meowland.config;
 
 import arc.Core;
 import arc.util.Log;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.yaml.snakeyaml.Yaml;
 
-import java.security.PublicKey;
 import java.util.Map;
 
 public class Config {
@@ -33,6 +33,8 @@ public class Config {
             + "\nrtv: true"
             + "\nwave: true"
             + "\nspawncore: false"
+            + "\njs: false"
+            + "\n"
             + "\n#Commands settings"
             + "\nspawn-limit: 15"
             + "\n"
@@ -42,10 +44,6 @@ public class Config {
             + "\n";
     private static Map<String, Object> obj;
 
-    public String webhook_url;
-    public String channel_id;
-    public String avatar_url;
-    public String server_name;
     public void loadConfig() {
         if(!Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").exists()){
             Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").writeString(config);
@@ -57,10 +55,6 @@ public class Config {
         Log.info("Meowland: patch to config: " + Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").toString());
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
-        webhook_url = obj.get("webhook_url").toString();
-        channel_id = obj.get("channel_id").toString();
-        avatar_url = obj.get("avatar_url").toString();
-        server_name = obj.get("server_name").toString();
     }
 
     public Config() {
@@ -75,8 +69,14 @@ public class Config {
     public static int getInt(int meow){
         Yaml yml = new Yaml();
         obj = yml.load(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString());
-        return (int) obj.get(obj);
+        return (int) obj.get(meow);
     }
+    public static TextChannel getChannel(String meow){
+        Yaml yml = new Yaml();
+        obj = yml.load(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString());
+        return (TextChannel) obj.get(meow);
+    }
+
 
 
 }

@@ -4,13 +4,16 @@ import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.game.Team;
 import mindustry.gen.*;
+import mindustry.mod.Plugin;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 
-public class AdminCommands{
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 
+public class AdminCommands extends Plugin{
 
     public void despw(String[] args, Player player){
         if((Config.get("despw").equals("false") && player.admin) || Config.get("despw").equals("true")){
@@ -113,9 +116,15 @@ public class AdminCommands{
             player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }
-
-
-
     }
+
+
+    public void js(String[] args, Player player){
+        if(Config.get("js").equals("false") && player.admin || Config.get("js").equals("true")){
+        }else {
+            player.sendMessage(Bundle.get("commands.permission-denied"));
+        }
+    }
+
 
 }
