@@ -51,7 +51,7 @@ channel_id: id
 bot_prefix: !
 ```
 
-###bot commands
+### Иot commands
 
 !! `bot_enable` must be true !!
 
