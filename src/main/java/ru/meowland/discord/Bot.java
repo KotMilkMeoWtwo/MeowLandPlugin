@@ -48,6 +48,16 @@ public class Bot {
                 //ch.sendMessage("meow").queue();
                 ch.sendMessageEmbeds(eb.build()).queue();
             });
+            Events.on(EventType.PlayerChatEvent.class, event ->{
+                Player player = event.player;
+                GuildMessageChannel ch = jda.getChannelById(GuildMessageChannel.class, Config.get("channel_id"));
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setTitle(Config.get("server_name"));
+                eb.addField(player.name, Bundle.get("discord.send") + event.message, false);
+                eb.setColor(15258703);
+                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
+                ch.sendMessageEmbeds(eb.build()).queue();
+            });
         }
     }
 }
