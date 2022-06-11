@@ -2,8 +2,6 @@ package ru.meowland.config;
 
 import arc.Core;
 import arc.util.Log;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
 import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
@@ -71,11 +69,6 @@ public class Config {
         Yaml yml = new Yaml();
         obj = yml.load(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString());
         return (int) obj.get(meow);
-    }
-    public static void getChannel(MessageChannel channel){
-        Yaml yml = new Yaml();
-        obj = yml.load(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString());
-        channel = (MessageChannel) obj.get(channel);
     }
 
 

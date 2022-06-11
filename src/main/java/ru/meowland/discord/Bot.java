@@ -33,8 +33,6 @@ public class Bot {
                 eb.addField(player.name, Bundle.get("discord.join"),  false);
                 eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()+1), false);
                 eb.setColor(3211008);
-
-                //ch.sendMessage("meow").queue();
                 ch.sendMessageEmbeds(eb.build()).queue();
             });
             Events.on(EventType.PlayerLeave.class, event -> {
@@ -45,7 +43,6 @@ public class Bot {
                 eb.addField(player.name, Bundle.get("discord.leave"), false);
                 eb.setColor(9109504);
                 eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()-1), false);
-                //ch.sendMessage("meow").queue();
                 ch.sendMessageEmbeds(eb.build()).queue();
             });
             Events.on(EventType.PlayerChatEvent.class, event ->{
