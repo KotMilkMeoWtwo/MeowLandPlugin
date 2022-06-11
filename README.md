@@ -50,3 +50,9 @@ bot_token: token
 channel_id: id
 bot_prefix: !
 ```
+
+###bot commands
+
+!! `bot_enable` must be true !!
+
+* `!send <text>` - send message on mindustry server
