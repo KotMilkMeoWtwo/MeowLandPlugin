@@ -70,7 +70,7 @@ public class Bot extends ListenerAdapter {
         if(msg.getContentRaw().startsWith("!send") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
             channel.sendMessage(Bundle.get("discord.sends")).queue();
-            Call.sendMessage("[blue]Discord[] " + msg.getAuthor().toString().replace("U:", "").replaceAll("[\\(1234567890\\)]", "") + ": " + msg.getContentRaw().replace( "!send", ""));
+            Call.sendMessage("[blue]Discord[] " + msg.getAuthor().toString().replace("U:", "").replaceAll("[\\(1234567890\\)]", "") + ": " + msg.getContentRaw().replace("!send", ""));
         }
     }
 }
