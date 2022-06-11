@@ -3,7 +3,6 @@ package ru.meowland;
 import arc.files.Fi;
 import arc.util.CommandHandler;
 import arc.util.Log;
-import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.mod.Plugin;
 import ru.meowland.commands.AdminCommands;
@@ -12,14 +11,9 @@ import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 import ru.meowland.discord.*;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.security.auth.login.LoginException;
-import java.io.InputStreamReader;
 
-public class MeowlandPlugin extends Plugin {
+public class MeowlandPlugin extends Plugin{
 
 
     AdminCommands adminCommands = new AdminCommands();
@@ -71,6 +65,4 @@ public class MeowlandPlugin extends Plugin {
         handler.<Player>register("spawncore", Bundle.get("command.spawncore.usage"), Bundle.get("command.spawncore.desc"), adminCommands::spawncore);
 
     }
-
-
 }
