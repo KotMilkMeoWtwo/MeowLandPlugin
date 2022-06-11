@@ -38,9 +38,15 @@ spawncore: false
 The output of messages and events to the discord is configured in the config (config/mods/MeowLand/config.yml)
 ```yml
 #Discord integration settings
-enable: true
+#webhook
+enable: false
 webhook_url: url
 channel_id: id
 avatar_url: https://github.com/Anuken/Mindustry/blob/master/core/assets-raw/sprites/units/corvus.png?raw=true
 server_name: test server
+#bot
+bot_enable: true
+bot_token: token
+channel_id: id
+bot_prefix: !
 ```
