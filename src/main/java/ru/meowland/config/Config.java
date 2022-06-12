@@ -21,7 +21,7 @@ public class Config {
             + "\nbot_enable: true"
             + "\nbot_token: token"
             + "\nchannel_id: id"
-            + "\nbot_prefix: !"
+            + "\nbot_prefix: m!"
             + "\n#Mindustry settings"
             + "\n#Permissions."
             + "\n#If it is true then the players will be able to use the command."

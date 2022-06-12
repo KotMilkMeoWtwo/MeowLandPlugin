@@ -19,6 +19,7 @@ import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 
 import javax.security.auth.login.LoginException;
+import java.util.Objects;
 
 public class Bot extends ListenerAdapter {
 
@@ -66,11 +67,18 @@ public class Bot extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
+        /*JDA jda = null;
+        try {
+            jda = JDABuilder.createDefault(Config.get("bot_token")).build();
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        }
+         */
         Message msg = event.getMessage();
-        if(msg.getContentRaw().startsWith("!send") && !msg.getAuthor().isBot()){
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "send") && !msg.getAuthor().isBot() /* && msg.getChannel().toString().equals(Objects.requireNonNull(jda.getChannelById(GuildMessageChannel.class, Config.get(""))).toString())*/){
             MessageChannel channel = event.getChannel();
             channel.sendMessage(Bundle.get("discord.sends")).queue();
-            Call.sendMessage("[blue]Discord[] " + msg.getAuthor().toString().replace("U:", "").replaceAll("[\\(1234567890\\)]", "") + ": " + msg.getContentRaw().replace("!send", ""));
+            Call.sendMessage("[blue]Discord[] " + msg.getAuthor().toString().replace("U:", "").replaceAll("[\\(1234567890\\)]", "") + ": " + msg.getContentRaw().replace(Config.get("bot_prefix") + "send", ""));
         }
     }
 }
