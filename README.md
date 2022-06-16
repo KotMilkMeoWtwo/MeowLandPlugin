@@ -14,7 +14,7 @@ This plugin is being developed for the meowland.ru server but anyone can use it.
 * `/team <Team>` - change your team.
 * `/despw` - kill all units.
 * `/spawncore <small|medium|large>` - spawn core.
-
+* `/js <code>` - run JavaScript code
 
 ### Permissions
 
@@ -31,6 +31,7 @@ shiza: true
 rtv: true
 wave: true 
 spawncore: false
+js: false
 ```
 
 ### Discord integration
