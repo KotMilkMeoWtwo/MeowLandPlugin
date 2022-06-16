@@ -9,10 +9,12 @@ import mindustry.type.UnitType;
 import mindustry.world.Block;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
+import mindustry.mod.*;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
+import static mindustry.Vars.*;
 
+
+@SuppressWarnings("unused")
 public class AdminCommands extends Plugin{
 
     public void despw(String[] args, Player player){
@@ -121,10 +123,21 @@ public class AdminCommands extends Plugin{
 
     public void js(String[] args, Player player){
         if(Config.get("js").equals("false") && player.admin || Config.get("js").equals("true")){
+            String output = mods.getScripts().runConsole(args[0]);
+            player.sendMessage("> " + (isError(output) ? "[yellow]" + output : output));
         }else {
             player.sendMessage(Bundle.get("commands.permission-denied"));
         }
     }
 
+    private boolean isError(String output){
+        try {
+            String errorName = output.substring(0, output.indexOf(' ') - 1);
+            Class.forName("org.mozilla.javascript." + errorName);
+            return true;
+        }catch (Throwable e){
+            return false;
+        }
+    }
 
 }
