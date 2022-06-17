@@ -123,8 +123,7 @@ public class AdminCommands extends Plugin{
 
     public void js(String[] args, Player player){
         if(Config.get("js").equals("false") && player.admin || Config.get("js").equals("true")){
-            String code = String.join(" ", args);
-            String output = mods.getScripts().runConsole(code);
+            String output = mods.getScripts().runConsole(args[0]);
             player.sendMessage("> " + (isError(output) ? "[yellow]" + output : output));
         }else {
             player.sendMessage(Bundle.get("commands.permission-denied"));
