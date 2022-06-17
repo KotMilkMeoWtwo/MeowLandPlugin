@@ -8,6 +8,8 @@ import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.net.Administration;
 import org.yaml.snakeyaml.Yaml;
+
+import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -33,7 +35,8 @@ public class WebhookPlayerJoin {
         Events.on(EventType.PlayerConnect.class, event ->{
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
-            Call.sendMessage("[lime]Игрок [#B](" + player.name + "[#B]) [lime]зашёл");
+            Call.sendMessage(Bundle.get("client.connected", player.name));
+            Log.info(Bundle.get("server.connected", player.name, player.uuid()));
             String jsonBrut = "";
             jsonBrut += "{\"embeds\": "
                     + " \n["
