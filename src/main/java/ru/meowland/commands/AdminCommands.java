@@ -13,6 +13,8 @@ import mindustry.mod.*;
 
 import static mindustry.Vars.*;
 
+import arc.util.Structs;
+
 
 @SuppressWarnings("unused")
 public class AdminCommands extends Plugin{
@@ -26,46 +28,38 @@ public class AdminCommands extends Plugin{
             player.sendMessage(Bundle.get("commands.permission-denied"));
         }
     }
-    public void spawn(String[] args, Player player){
-        if((Config.get("spawn").equals("false") && player.admin) || Config.get("spawn").equals("true")){
-            UnitType unit = Vars.content.units().find(b -> b.name.equals(args[0]));
-            int count;
-            try {
-                count = Integer.parseInt(args[1]);
-            }catch (NumberFormatException e){
-                player.sendMessage(Bundle.get("commands.int-is-no-int"));
-                return;
-            }
-            Team team;
-            if (args[2].equals("sharded")) {
-                team = Team.sharded;
-            } else if(args[2].equals("blue")){
-                team = Team.blue;
-            } else if(args[2].equals("crux")){
-                team = Team.crux;
-            } else if (args[2].equals("derelict")) {
-                team = Team.derelict;
-            } else if (args[2].equals("green")) {
-                team = Team.green;
-            } else if(args[2].equals("purple")){
-                team = Team.purple;
-            } else {
+    public void spawn(String[] args, Player player) {
+        if ((Config.get("spawn").equals("false") && player.admin) || Config.get("spawn").equals("true")) {
+            UnitType unit = content.units().find(b -> b.name.equalsIgnoreCase(args[0]));
+            int count = 1;
+            if (args.length > 1){
+                try {
+                    count = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    player.sendMessage(Bundle.get("commands.int-is-no-int"));
+                    return;
+                }
+            } 
+
+            Team team = args.length > 2 ? Structs.find(Team.baseTeams, t -> t.name.equalsIgnoreCase(args[2])) : player.team();
+            if (team == null) {
                 player.sendMessage(Bundle.get("commands.teams"));
                 return;
             }
-            if(count > Config.getInt(Integer.parseInt("spawn-limit"))){
+
+            if (count > Integer.parseInt(Config.get("spawn-limit"))) {
                 player.sendMessage(Bundle.get("commands.spawn.limit") + Config.get("spawn-limit"));
                 return;
             }
-            if(unit != null){
+
+            if (unit != null) {
                 for (int i = 0; count > i; i++) {
-                    Unit unit1 = unit.spawn(team, player.x, player.y);
+                    unit.spawn(team, player.x, player.y);
                 }
                 player.sendMessage(Bundle.get("commands.successful"));
-            }else {
+            } else {
                 player.sendMessage(Bundle.get("commands.units"));
             }
-
 
         } else {
             player.sendMessage(Bundle.get("commands.permission-denied"));
@@ -73,28 +67,15 @@ public class AdminCommands extends Plugin{
         }
     }
     public void team(String[] args, Player player){
-        Team team;
-
         if((Config.get("team").equals("false") && player.admin) || Config.get("team").equals("true")){
-            if (args[0].equals("sharded")) {
-                team = Team.sharded;
-            } else if (args[0].equals("blue")) {
-                team = Team.blue;
-            } else if (args[0].equals("crux")) {
-                team = Team.crux;
-            } else if (args[0].equals("derelict")) {
-                team = Team.derelict;
-            } else if (args[0].equals("green")) {
-                team = Team.green;
-            } else if (args[0].equals("purple")) {
-                team = Team.purple;
-            } else {
+            Team team = args.length > 0 ? Structs.find(Team.baseTeams, t -> t.name.equalsIgnoreCase(args[0])) : player.team(); 
+            if (team == null) {
                 player.sendMessage(Bundle.get("commands.teams"));
                 return;
             }
             player.sendMessage(Bundle.get("commands.successful"));
             player.team(team);
-        }else{
+        } else {
             player.sendMessage(Bundle.get("commands.permission-denied"));
             return;
         }

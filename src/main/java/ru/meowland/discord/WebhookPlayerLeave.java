@@ -2,10 +2,14 @@ package ru.meowland.discord;
 
 import arc.Core;
 import arc.Events;
+import arc.util.Log;
 import mindustry.game.EventType;
+import mindustry.gen.Call;
 import mindustry.gen.Player;
 import mindustry.net.Administration;
 import org.yaml.snakeyaml.Yaml;
+
+import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -31,6 +35,8 @@ public class WebhookPlayerLeave {
             server_name = obj.get("server_name").toString();
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
+            Call.sendMessage(Bundle.get("client.disconnected", player.name));
+            Log.info(Bundle.get("server.disconnected", player.name, player.uuid()));
             String jsonBrut = "";
 
             jsonBrut += "{\"embeds\": "

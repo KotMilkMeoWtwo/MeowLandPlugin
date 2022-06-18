@@ -24,7 +24,6 @@ public class WebhookPlayerMessage {
 
     public void message(){
         Events.on(EventType.PlayerChatEvent.class, event -> {
-            Log.info(event.message);
             if (event.message.startsWith("/a")) {
                 Log.info("Meowland: игнор сообщения потому что это админский чат");
             } else {
