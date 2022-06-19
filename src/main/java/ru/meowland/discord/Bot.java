@@ -75,10 +75,14 @@ public class Bot extends ListenerAdapter {
         }
          */
         Message msg = event.getMessage();
-        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "send") && !msg.getAuthor().isBot() /* && msg.getChannel().toString().equals(Objects.requireNonNull(jda.getChannelById(GuildMessageChannel.class, Config.get(""))).toString())*/){
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "send") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
             channel.sendMessage(Bundle.get("discord.sends")).queue();
             Call.sendMessage("[blue]Discord[] " + msg.getAuthor().toString().replace("U:", "").replaceAll("[\\(1234567890\\)]", "") + ": " + msg.getContentRaw().replace(Config.get("bot_prefix") + "send", ""));
+        }
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "players") && !msg.getAuthor().isBot()){
+            MessageChannel channel = event.getChannel();
+            channel.sendMessage(Bundle.get("discord.count") + Groups.player.size()).queue();
         }
     }
 }
