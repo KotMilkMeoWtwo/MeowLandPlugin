@@ -87,7 +87,9 @@ public class Bot extends ListenerAdapter {
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setTitle(Config.get("server_name"));
                 eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
-                eb.addField(Bundle.get("discord.players"), "name: " + p.name + " uuid: " + p.uuid(), false);
+                for (int i = 0; i < Groups.player.size(); i++){
+                    eb.addField(Bundle.get("discord.players"), "name: " + p.name + " uuid: " + p.uuid(), false);
+                }
                 channel.sendMessageEmbeds(eb.build()).queue();
                 // channel.sendMessage(Bundle.get("discord.count") + Groups.player.size()).queue();
                 // channel.sendMessage(p.name()).queue();
