@@ -80,9 +80,18 @@ public class Bot extends ListenerAdapter {
             channel.sendMessage(Bundle.get("discord.sends")).queue();
             Call.sendMessage("[blue]Discord[] " + msg.getAuthor().toString().replace("U:", "").replaceAll("[\\(1234567890\\)]", "") + ": " + msg.getContentRaw().replace(Config.get("bot_prefix") + "send", ""));
         }
+
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "players") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
-            channel.sendMessage(Bundle.get("discord.count") + Groups.player.size()).queue();
+            Groups.player.each(p ->{
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setTitle(Config.get("server_name"));
+                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
+                eb.addField(Bundle.get("discord.players"), "name: " + p.name + " uuid: " + p.uuid(), false);
+                channel.sendMessageEmbeds(eb.build()).queue();
+                // channel.sendMessage(Bundle.get("discord.count") + Groups.player.size()).queue();
+                // channel.sendMessage(p.name()).queue();
+            });
         }
     }
 }
