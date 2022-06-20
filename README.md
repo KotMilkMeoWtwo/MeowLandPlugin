@@ -15,6 +15,7 @@ This plugin is being developed for the meowland.ru server but anyone can use it.
 * `/despw` - kill all units.
 * `/spawncore <small|medium|large>` - spawn core.
 * `/js <code>` - run JavaScript code
+* `/setblock <block>` - spawn block 
 
 ### Permissions
 
