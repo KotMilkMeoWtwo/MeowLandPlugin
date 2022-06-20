@@ -33,6 +33,7 @@ rtv: true
 wave: true 
 spawncore: false
 js: false
+setblock: false
 ```
 
 ### Discord integration
