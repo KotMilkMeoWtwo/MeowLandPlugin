@@ -1,6 +1,5 @@
 package ru.meowland.commands;
 
-import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.game.Team;
 import mindustry.gen.*;
@@ -9,7 +8,6 @@ import mindustry.type.UnitType;
 import mindustry.world.Block;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
-import mindustry.mod.*;
 
 import static mindustry.Vars.*;
 
@@ -101,6 +99,18 @@ public class AdminCommands extends Plugin{
         }
     }
 
+    public void setblock(String[] args, Player player){
+        if((Config.get("setblock").equals("false") && player.admin) || Config.get("setblock").equals("true")){
+            Block block  = content.blocks().find(b -> b.name.equalsIgnoreCase(args[0]));
+            if(block != null){
+                Call.constructFinish(player.tileOn(), block, player.unit(), (byte)0, player.team(), false);
+                player.sendMessage(Bundle.get("commands.successful"));
+            }
+        } else {
+            player.sendMessage(Bundle.get("commands.permission-denied"));
+            return;
+        }
+    }
 
     public void js(String[] args, Player player){
         if(Config.get("js").equals("false") && player.admin || Config.get("js").equals("true")){

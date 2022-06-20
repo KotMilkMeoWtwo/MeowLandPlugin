@@ -34,6 +34,7 @@ public class Config {
             + "\nwave: true"
             + "\nspawncore: false"
             + "\njs: false"
+            + "\nsetblock: false"
             + "\n"
             + "\n#Commands settings"
             + "\nspawn-limit: 15"

@@ -87,12 +87,20 @@ public class Bot extends ListenerAdapter {
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setTitle(Config.get("server_name"));
                 eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
+                String meow = p.name;
                 for (int i = 0; i < Groups.player.size(); i++){
+                    /*
+                    if (Objects.equals(meow, p.name)){
+                        i--;
+                        Log.info("ифка сработала");
+                        return;
+                    }
+
+                     */
+                    meow = p.name;
                     eb.addField(Bundle.get("discord.players"), "name: " + p.name + " uuid: " + p.uuid(), false);
                 }
                 channel.sendMessageEmbeds(eb.build()).queue();
-                // channel.sendMessage(Bundle.get("discord.count") + Groups.player.size()).queue();
-                // channel.sendMessage(p.name()).queue();
             });
         }
     }

@@ -63,6 +63,6 @@ public class MeowlandPlugin extends Plugin{
         handler.<Player>register("spawn", Bundle.get("command.spawn.usage"), Bundle.get("command.spawn.desc"), adminCommands::spawn);
         handler.<Player>register("team", Bundle.get("command.team.usage"), Bundle.get("command.team.desc"), adminCommands::team);
         handler.<Player>register("spawncore", Bundle.get("command.spawncore.usage"), Bundle.get("command.spawncore.desc"), adminCommands::spawncore);
-
+        handler.<Player>register("setblock", Bundle.get("command.setblock.usage"), Bundle.get("command.setblock.desc"), adminCommands::setblock);
     }
 }
