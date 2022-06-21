@@ -16,6 +16,7 @@ This plugin is being developed for the meowland.ru server but anyone can use it.
 * `/spawncore <small|medium|large>` - spawn core.
 * `/js <code>` - run JavaScript code
 * `/setblock <block>` - spawn block 
+* `/advertisement <text...>` - send gui menu with message
 
 ### Permissions
 
@@ -34,6 +35,7 @@ wave: true
 spawncore: false
 js: false
 setblock: false
+advertisement: false
 ```
 
 ### Discord integration
