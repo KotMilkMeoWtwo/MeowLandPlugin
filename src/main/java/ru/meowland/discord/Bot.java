@@ -83,25 +83,15 @@ public class Bot extends ListenerAdapter {
 
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "players") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
+            StringBuilder builder = new StringBuilder();
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle(Config.get("server_name"));
+            eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
             Groups.player.each(p ->{
-                EmbedBuilder eb = new EmbedBuilder();
-                eb.setTitle(Config.get("server_name"));
-                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
-                String meow = p.name;
-                for (int i = 0; i < Groups.player.size(); i++){
-                    /*
-                    if (Objects.equals(meow, p.name)){
-                        i--;
-                        Log.info("ифка сработала");
-                        return;
-                    }
-
-                     */
-                    meow = p.name;
-                    eb.addField(Bundle.get("discord.players"), "name: " + p.name + " uuid: " + p.uuid(), false);
-                }
-                channel.sendMessageEmbeds(eb.build()).queue();
+                builder.append(p.name).append("uuid: ").append(p.uuid()).append("ip: ").append(p.ip()).append("\n");
             });
+            eb.addField(Bundle.get("discord.players"), builder.toString(), false);
+            channel.sendMessageEmbeds(eb.build()).queue();
         }
     }
 }
