@@ -60,4 +60,6 @@ bot_prefix: !
 
 !! `bot_enable` must be true !!
 
-* `!send <text>` - send message on mindustry server
+* `m!send <text>` - send message on mindustry server
+* `m!players` - display all players at the server (broken now)
+
