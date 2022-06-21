@@ -35,6 +35,7 @@ public class Config {
             + "\nspawncore: false"
             + "\njs: false"
             + "\nsetblock: false"
+            + "\nadvertisement: false"
             + "\n"
             + "\n#Commands settings"
             + "\nspawn-limit: 15"

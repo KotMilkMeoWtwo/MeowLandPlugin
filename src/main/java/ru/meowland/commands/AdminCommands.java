@@ -112,6 +112,15 @@ public class AdminCommands extends Plugin{
         }
     }
 
+    public void advertisement(String[] args, Player player){
+        if((Config.get("advertisement").equals("false") && player.admin) || Config.get("advertisement").equals("false")){
+            Call.infoMessage(Bundle.get("commands.advertisement.title") + "\n\n\n\n\n[]" + args[0]);
+        } else {
+            player.sendMessage(Bundle.get("command.permission-denied"));
+            return;
+        }
+    }
+
     public void js(String[] args, Player player){
         if(Config.get("js").equals("false") && player.admin || Config.get("js").equals("true")){
             String output = mods.getScripts().runConsole(args[0]);
