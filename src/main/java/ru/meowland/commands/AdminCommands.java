@@ -64,6 +64,7 @@ public class AdminCommands extends Plugin{
             return;
         }
     }
+
     public void team(String[] args, Player player){
         if((Config.get("team").equals("false") && player.admin) || Config.get("team").equals("true")){
             Team team = args.length > 0 ? Structs.find(Team.baseTeams, t -> t.name.equalsIgnoreCase(args[0])) : player.team(); 
@@ -111,7 +112,6 @@ public class AdminCommands extends Plugin{
             return;
         }
     }
-
     public void advertisement(String[] args, Player player){
         if((Config.get("advertisement").equals("false") && player.admin) || Config.get("advertisement").equals("false")){
             Call.infoMessage(Bundle.get("commands.advertisement.title") + "\n\n\n\n\n[]" + args[0]);

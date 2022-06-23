@@ -2,6 +2,7 @@ package ru.meowland.discord;
 
 import arc.Events;
 import arc.util.Log;
+import mindustry.core.NetServer;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
@@ -9,10 +10,7 @@ import mindustry.gen.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.GuildMessageChannel;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import ru.meowland.config.Bundle;
@@ -88,10 +86,22 @@ public class Bot extends ListenerAdapter {
             eb.setTitle(Config.get("server_name"));
             eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
             Groups.player.each(p ->{
-                builder.append(p.name).append(" uuid: ").append(p.uuid()).append(" ip: ").append(p.ip()).append(" admin: "+ p.admin()).append("\n");
+                builder.append(p.name).append(" uuid: ").append(p.uuid()).append(" admin: "+ p.admin()).append("\n");
             });
             eb.addField(Bundle.get("discord.players"), builder.toString(), false);
             channel.sendMessageEmbeds(eb.build()).queue();
+        }
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "ban") && !msg.getAuthor().isBot() && event.isFromType(ChannelType.PRIVATE)){
+            NetServer server = new NetServer();
+            MessageChannel channel = event.getChannel();
+            server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "ban", ""));
+            channel.sendMessage(Bundle.get("commands.successful"));
+        }
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "unban") && !msg.getAuthor().isBot() && event.isFromType(ChannelType.PRIVATE)){
+            NetServer server = new NetServer();
+            MessageChannel channel = event.getChannel();
+            server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "unban", ""));
+            channel.sendMessage(Bundle.get("commands.successful"));
         }
     }
 }
