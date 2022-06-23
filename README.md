@@ -61,5 +61,7 @@ bot_prefix: !
 !! `bot_enable` must be true !!
 
 * `m!send <text>` - send message on mindustry server
-* `m!players` - display all players at the server
+* `m!players` - display all players at the server\
+* `m!ban <uuid>` - ban player
+* `m!unban <uuid>` - unban player
 
