@@ -62,6 +62,6 @@ bot_prefix: !
 
 * `m!send <text>` - send message on mindustry server
 * `m!players` - display all players at the server\
-* `m!ban <uuid>` - ban player
-* `m!unban <uuid>` - unban player
+* `m!ban <uuid>` - ban player. Work only in private channels
+* `m!unban <uuid>` - unban player. Work only in private channels
 
