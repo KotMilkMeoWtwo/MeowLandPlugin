@@ -1,5 +1,6 @@
 package ru.meowland.discord;
 
+import arc.Core;
 import arc.Events;
 import arc.util.Log;
 import mindustry.core.NetServer;
@@ -18,6 +19,7 @@ import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 
 import javax.security.auth.login.LoginException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class Bot extends ListenerAdapter {
@@ -86,21 +88,22 @@ public class Bot extends ListenerAdapter {
             channel.sendMessageEmbeds(eb.build()).queue();
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "ban") && !msg.getAuthor().isBot()){
-            Member author = (Member) msg.getAuthor();
+            Member author =  msg.getMember();
             if(author.getRoles().stream().flatMap(p -> p.getPermissions().stream()).anyMatch(p -> p == Permission.ADMINISTRATOR)) {
                 NetServer server = new NetServer();
                 MessageChannel channel = event.getChannel();
-                server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "ban", ""));
-                channel.sendMessage(Bundle.get("commands.successful"));
+                server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "ban ", ""));
+                channel.sendMessage(Bundle.get("discord.successful")).queue();
             }
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "unban") && !msg.getAuthor().isBot()){
-            Member author = (Member) msg.getAuthor();
-            if(author.getRoles().stream().flatMap(p -> p.getPermissions().stream()).anyMatch(p -> p == Permission.ADMINISTRATOR)){
+            Member author =  msg.getMember();
+            if(author.getRoles().stream().flatMap(p -> p.getPermissions().stream()).anyMatch(
+                    p -> p == Permission.ADMINISTRATOR)){
                 NetServer server = new NetServer();
                 MessageChannel channel = event.getChannel();
-                server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "unban", ""));
-                channel.sendMessage(Bundle.get("commands.successful"));
+                server.admins.unbanPlayerID(msg.getContentRaw().replace(Config.get("bot_prefix") + "unban ", ""));
+                channel.sendMessage(Bundle.get("discord.successful")).queue();
             }
         }
 
@@ -108,15 +111,27 @@ public class Bot extends ListenerAdapter {
             EmbedBuilder eb = new EmbedBuilder();
             MessageChannel channel = event.getChannel();
             eb.setTitle(Bundle.get("discord.help"));
-            eb.addField("1", "m!send" + Bundle.get("discord.help.send"), false);
-            eb.addField("2.", "m!players" + Bundle.get("discord.help.players"), false);
-            eb.addField("3.", "m!ban" + Bundle.get("discord.help.ban"), false);
-            eb.addField("4.", "m!unban" + Bundle.get("discord.help.unban"), false);
-            eb.addField("5.", "m!add_map" + Bundle.get("discord.help.add_map"), false);
+            eb.addField("1", "m!send " + Bundle.get("discord.help.send"), false);
+            eb.addField("2.", "m!players " + Bundle.get("discord.help.players"), false);
+            eb.addField("3.", "m!ban " + Bundle.get("discord.help.ban"), false);
+            eb.addField("4.", "m!unban " + Bundle.get("discord.help.unban"), false);
+            eb.addField("5.", "m!add_map"  + Bundle.get("discord.help.add_map"), false);
             channel.sendMessageEmbeds(eb.build()).queue();
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "add_map") && !msg.getAuthor().isBot()){
-
+            Member author = msg.getMember();
+            if(author.getRoles().stream().flatMap(p-> p.getPermissions().stream()).anyMatch(
+                    p-> p == Permission.ADMINISTRATOR
+            )){
+                MessageChannel channel = event.getChannel();
+                var attachments = msg.getAttachments();
+                if(attachments.size() != 1){
+                    channel.sendMessage(Bundle.get("discord.no_file"));
+                    return;
+                }
+                InputStream file = attachments.get(0).retrieveInputStream().join();
+                Core.settings.getDataDirectory().child("/maps/").write(file, true);
+            }
         }
 
     }
