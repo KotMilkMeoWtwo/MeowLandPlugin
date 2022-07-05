@@ -65,13 +65,6 @@ public class Bot extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
-        /*JDA jda = null;
-        try {
-            jda = JDABuilder.createDefault(Config.get("bot_token")).build();
-        } catch (LoginException e) {
-            throw new RuntimeException(e);
-        }
-         */
         Message msg = event.getMessage();
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "send") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
@@ -103,5 +96,18 @@ public class Bot extends ListenerAdapter {
             server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "unban", ""));
             channel.sendMessage(Bundle.get("commands.successful"));
         }
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "help") && !msg.getAuthor().isBot()){
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle(Bundle.get("discord.help"));
+            eb.addField("1", "m!players - <later>", false);
+            eb.addField("2.", "m!players", false);
+            eb.addField("3.", "m!ban", false);
+            eb.addField("4.", "m!unban", false);
+            eb.addField("5.", "m!add_map", false);
+        }
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "add_map") && !msg.getAuthor().isBot()){
+
+        }
+
     }
 }
