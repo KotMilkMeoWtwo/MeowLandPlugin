@@ -10,6 +10,7 @@ import mindustry.gen.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -84,26 +85,35 @@ public class Bot extends ListenerAdapter {
             eb.addField(Bundle.get("discord.players"), builder.toString(), false);
             channel.sendMessageEmbeds(eb.build()).queue();
         }
-        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "ban") && !msg.getAuthor().isBot() && event.isFromType(ChannelType.PRIVATE)){
-            NetServer server = new NetServer();
-            MessageChannel channel = event.getChannel();
-            server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "ban", ""));
-            channel.sendMessage(Bundle.get("commands.successful"));
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "ban") && !msg.getAuthor().isBot()){
+            Member author = (Member) msg.getAuthor();
+            if(author.getRoles().stream().flatMap(p -> p.getPermissions().stream()).anyMatch(p -> p == Permission.ADMINISTRATOR)) {
+                NetServer server = new NetServer();
+                MessageChannel channel = event.getChannel();
+                server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "ban", ""));
+                channel.sendMessage(Bundle.get("commands.successful"));
+            }
         }
-        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "unban") && !msg.getAuthor().isBot() && event.isFromType(ChannelType.PRIVATE)){
-            NetServer server = new NetServer();
-            MessageChannel channel = event.getChannel();
-            server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "unban", ""));
-            channel.sendMessage(Bundle.get("commands.successful"));
+        if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "unban") && !msg.getAuthor().isBot()){
+            Member author = (Member) msg.getAuthor();
+            if(author.getRoles().stream().flatMap(p -> p.getPermissions().stream()).anyMatch(p -> p == Permission.ADMINISTRATOR)){
+                NetServer server = new NetServer();
+                MessageChannel channel = event.getChannel();
+                server.admins.banPlayer(msg.getContentRaw().replace(Config.get("bot_prefix") + "unban", ""));
+                channel.sendMessage(Bundle.get("commands.successful"));
+            }
         }
+
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "help") && !msg.getAuthor().isBot()){
             EmbedBuilder eb = new EmbedBuilder();
+            MessageChannel channel = event.getChannel();
             eb.setTitle(Bundle.get("discord.help"));
-            eb.addField("1", "m!players - <later>", false);
-            eb.addField("2.", "m!players", false);
-            eb.addField("3.", "m!ban", false);
-            eb.addField("4.", "m!unban", false);
-            eb.addField("5.", "m!add_map", false);
+            eb.addField("1", "m!send" + Bundle.get("discord.help.send"), false);
+            eb.addField("2.", "m!players" + Bundle.get("discord.help.players"), false);
+            eb.addField("3.", "m!ban" + Bundle.get("discord.help.ban"), false);
+            eb.addField("4.", "m!unban" + Bundle.get("discord.help.unban"), false);
+            eb.addField("5.", "m!add_map" + Bundle.get("discord.help.add_map"), false);
+            channel.sendMessageEmbeds(eb.build()).queue();
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "add_map") && !msg.getAuthor().isBot()){
 
