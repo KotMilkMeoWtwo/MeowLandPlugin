@@ -21,6 +21,7 @@ import ru.meowland.config.Config;
 import javax.security.auth.login.LoginException;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Bot extends ListenerAdapter {
 
@@ -130,7 +131,8 @@ public class Bot extends ListenerAdapter {
                     return;
                 }
                 InputStream file = attachments.get(0).retrieveInputStream().join();
-                Core.settings.getDataDirectory().child("/maps/").write(file, true);
+                Core.settings.getDataDirectory().child("/maps/" + /*Math.random()*999999999 */ UUID.randomUUID().toString() + ".msav").write(file, false);
+                channel.sendMessage(Bundle.get("discord.successful"));
             }
         }
 
