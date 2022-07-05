@@ -62,6 +62,7 @@ bot_prefix: !
 
 * `m!send <text>` - send message on mindustry server
 * `m!players` - display all players at the server\
-* `m!ban <uuid>` - ban player. Work only in private channels
-* `m!unban <uuid>` - unban player. Work only in private channels
+* `m!ban <uuid>` - ban player (need kick). Admin only cmd
+* `m!unban <uuid>` - unban player. Admin only cmd
+* `m!add_map <file.msav>` - add map on server. Admin only cmd. Need server restart
 
