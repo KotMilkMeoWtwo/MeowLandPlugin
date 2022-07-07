@@ -3,6 +3,7 @@ package ru.meowland.discord;
 import arc.Core;
 import arc.Events;
 import arc.util.Log;
+import mindustry.Vars;
 import mindustry.core.NetServer;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
@@ -132,6 +133,7 @@ public class Bot extends ListenerAdapter {
                 }
                 InputStream file = attachments.get(0).retrieveInputStream().join();
                 Core.settings.getDataDirectory().child("/maps/" + /*Math.random()*999999999 */ UUID.randomUUID().toString() + ".msav").write(file, false);
+                Vars.maps.reload();
                 channel.sendMessage(Bundle.get("discord.successful"));
             }
         }
