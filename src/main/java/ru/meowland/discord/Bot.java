@@ -36,14 +36,14 @@ public class Bot extends ListenerAdapter {
         }
     }
 
-    JDABuilder builder = JDABuilder.createDefault(Config.get("bot_token")).addEventListeners(new Bot());
+    //JDABuilder builder = JDABuilder.createDefault(Config.get("bot_token")).addEventListeners(new Bot());
 
     public void bot() throws LoginException {
         if(Config.get("bot_enable").equals("true")){
             Log.info("Meowland: bot started");
 
-            builder.setActivity(Activity.watching(String.valueOf( (Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory())/1024/1024 + "Mb/" + Runtime.getRuntime().maxMemory()/1024/1024 + "Mb")));
-            builder.build();
+            //builder.setActivity(Activity.watching(String.valueOf( (Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory())/1024/1024 + "Mb/" + Runtime.getRuntime().maxMemory()/1024/1024 + "Mb")));
+            //builder.build();
             Events.on(EventType.PlayerConnect.class, event ->{
                 Player player = event.player;
                 GuildMessageChannel ch = jda.getChannelById(GuildMessageChannel.class, Config.get("channel_id"));
