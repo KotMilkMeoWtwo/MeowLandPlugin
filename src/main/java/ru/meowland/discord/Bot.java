@@ -26,12 +26,22 @@ import java.util.UUID;
 
 public class Bot extends ListenerAdapter {
 
+    JDA jda;
+
+    {
+        try {
+            jda = JDABuilder.createDefault(Config.get("bot_token")).build();
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    JDABuilder builder = JDABuilder.createDefault(Config.get("bot_token")).addEventListeners(new Bot());
 
     public void bot() throws LoginException {
         if(Config.get("bot_enable").equals("true")){
             Log.info("Meowland: bot started");
-            JDA jda = JDABuilder.createDefault(Config.get("bot_token")).build();
-            JDABuilder builder = JDABuilder.createDefault(Config.get("bot_token")).addEventListeners(new Bot());
+
             builder.setActivity(Activity.watching(String.valueOf( (Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory())/1024/1024 + "Mb/" + Runtime.getRuntime().maxMemory()/1024/1024 + "Mb")));
             builder.build();
             Events.on(EventType.PlayerConnect.class, event ->{
