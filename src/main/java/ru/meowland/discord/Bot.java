@@ -41,7 +41,7 @@ public class Bot extends ListenerAdapter {
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setTitle(Config.get("server_name"));
                 eb.addField(player.name, Bundle.get("discord.join"),  false);
-                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()+1), false);
+                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
                 eb.setColor(3211008);
                 ch.sendMessageEmbeds(eb.build()).queue();
             });
