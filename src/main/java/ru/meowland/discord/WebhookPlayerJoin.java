@@ -32,7 +32,7 @@ public class WebhookPlayerJoin {
         channel_id = obj.get("channel_id").toString();
         avatar_url = obj.get("avatar_url").toString();
         server_name = obj.get("server_name").toString();
-        Events.on(EventType.PlayerConnect.class, event ->{
+        Events.on(EventType.PlayerJoin.class, event ->{
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
             Call.sendMessage(Bundle.get("client.connected", player.name));
