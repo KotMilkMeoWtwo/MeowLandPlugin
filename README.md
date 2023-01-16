@@ -2,6 +2,7 @@
 
 This plugin is being developed for the meowland.ru server but anyone can use it.
 
+mindustry build 141+
 ### Player commands
 
 * `/wave` - vote for wave skip. 
