@@ -20,7 +20,7 @@ public class Bundle {
 
 
 
-    public static final String[] langList = {"en_US", "ru_RU"};
+    public static final String[] langList = {"en_US", "ru_RU", "zn_CN"};
     public static final Fi langDir = MeowlandPlugin.pluginDir.child("lang");
 
     public static String seelctedLang;
@@ -29,7 +29,7 @@ public class Bundle {
     private static ObjectMap<String, String> properties;
 
     public static void init(){
-        Log.info("init b");
+        Log.info("Meowland plugin init");
         generate();
 
         seelctedLang = Config.get("language");
@@ -43,7 +43,6 @@ public class Bundle {
 
     public static void generate(){
         for (String lang : langList){
-            Log.info("meow");
             final String langPath = "lang/" + lang + ".properties";
             final Fi file = MeowlandPlugin.pluginDir.child(langPath);
 

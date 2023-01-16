@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Config {
     private static String config = ""
-            + "\n#Plugin language en_US/ru_RU"
+            + "\n#Plugin language en_US/ru_RU/zh_CN"
             + "\nlanguage: en_US"
             + "\n#Discord integration settings"
             + "\n#webhook"
