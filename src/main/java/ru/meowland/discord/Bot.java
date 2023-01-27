@@ -128,11 +128,11 @@ public class Bot extends ListenerAdapter {
             EmbedBuilder eb = new EmbedBuilder();
             MessageChannel channel = event.getChannel();
             eb.setTitle(Bundle.get("discord.help"));
-            eb.addField("1", "m!send " + Bundle.get("discord.help.send"), false);
-            eb.addField("2.", "m!players " + Bundle.get("discord.help.players"), false);
-            eb.addField("3.", "m!ban " + Bundle.get("discord.help.ban"), false);
-            eb.addField("4.", "m!unban " + Bundle.get("discord.help.unban"), false);
-            eb.addField("5.", "m!add_map"  + Bundle.get("discord.help.add_map"), false);
+            eb.addField("1.", + Config.get("bot_prefix") + "send " + Bundle.get("discord.help.send"), false);
+            eb.addField("2.", + Config.get("bot_prefix") + "players " + Bundle.get("discord.help.players"), false);
+            eb.addField("3.", + Config.get("bot_prefix") + "ban " + Bundle.get("discord.help.ban"), false);
+            eb.addField("4.", + Config.get("bot_prefix") + "unban " + Bundle.get("discord.help.unban"), false);
+            eb.addField("5.", + Config.get("bot_prefix") + "add_map"  + Bundle.get("discord.help.add_map"), false);
             channel.sendMessageEmbeds(eb.build()).queue();
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "add_map") && !msg.getAuthor().isBot()){
