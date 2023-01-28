@@ -20,6 +20,8 @@ dependencies{
     implementation("club.minnced:discord-webhooks:0.8.0")
     implementation 'org.yaml:snakeyaml:1.30'
     implementation("net.dv8tion:JDA:5.0.0-alpha.12")
+    implementation "com.github.xzxADIxzx.useful-stuffs:server-menus:2a68f24553"
+    implementation 'org.mongodb:mongodb-driver-sync:4.8.1'
 
 }
 //mmmm

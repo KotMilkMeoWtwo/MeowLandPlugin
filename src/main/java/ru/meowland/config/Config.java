@@ -40,7 +40,7 @@ public class Config {
             + "\n#Commands settings"
             + "\nspawn-limit: 15"
             + "\n"
-            + "\n"
+            + "\n#Data base"
             + "\n"
             + "\n";
     private static Map<String, Object> obj;

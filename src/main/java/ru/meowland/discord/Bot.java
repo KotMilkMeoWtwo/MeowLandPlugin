@@ -62,22 +62,6 @@ public class Bot extends ListenerAdapter {
                 eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
                 ch.sendMessageEmbeds(eb.build()).queue();
             });
-            /*
-
-
-            [E] java.lang.NullPointerException: Cannot invoke "net.dv8tion.jda.api.entities.GuildMessageChannel.sendMessageEmbeds(net.dv8tion.jda.api.entities.MessageEmbed, net.dv8tion.jda.api.entities.MessageEmbed[])" because "ch" is null
-	at ru.meowland.discord.Bot.lambda$bot$3(Bot.java:70)
-
-
-
-                Events.on(EventType.ServerLoadEvent.class, event ->{
-                    EmbedBuilder eb = new EmbedBuilder();
-                    GuildMessageChannel ch = jda.getChannelById(GuildMessageChannel.class, Config.get("channel_id"));
-                    eb.setTitle(Config.get("server_name"));
-                    eb.addField(Bundle.get("server.load"), Bundle.get("server.nya"), false);
-                    ch.sendMessageEmbeds(eb.build()).queue();
-                });
-             */
 
         }
     }
