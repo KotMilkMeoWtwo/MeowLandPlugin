@@ -35,8 +35,8 @@ public class WebhookPlayerLeave {
             server_name = obj.get("server_name").toString();
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
-            Call.sendMessage(Bundle.get("client.disconnected", player.name));
-            Log.info(Bundle.get("server.disconnected", player.name, player.uuid()));
+            //Call.sendMessage(Bundle.get("client.disconnected", player.name));
+            //Log.info(Bundle.get("server.disconnected", player.name, player.uuid()));
             String jsonBrut = "";
 
             jsonBrut += "{\"embeds\": "

@@ -69,6 +69,7 @@ public class Bot extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
+        Guild guild = event.getGuild();
         Message msg = event.getMessage();
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "send") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
@@ -77,16 +78,21 @@ public class Bot extends ListenerAdapter {
         }
 
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "players") && !msg.getAuthor().isBot()){
-            MessageChannel channel = event.getChannel();
-            StringBuilder builder = new StringBuilder();
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle(Config.get("server_name"));
-            eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
-            Groups.player.each(p ->{
-                builder.append(p.name).append(" uuid: ").append(p.uuid()).append(" admin: "+ p.admin()).append("\n");
-            });
-            eb.addField(Bundle.get("discord.players"), builder.toString(), false);
-            channel.sendMessageEmbeds(eb.build()).queue();
+            if(Objects.requireNonNull(msg.getGuild().getMemberById(msg.getAuthor().getId())).hasPermission(Permission.ADMINISTRATOR)){
+                MessageChannel channel = event.getChannel();
+                StringBuilder builder = new StringBuilder();
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setTitle(Config.get("server_name"));
+                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
+                Groups.player.each(p ->{
+                    builder.append(p.name).append(" uuid: ").append(p.uuid()).append(" admin: "+ p.admin()).append("\n");
+                });
+                eb.addField(Bundle.get("discord.players"), builder.toString(), false);
+                channel.sendMessageEmbeds(eb.build()).queue();
+            }else {
+                msg.reply(Bundle.get("commands.permission-denied")).queue();
+            }
+
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "ban") && !msg.getAuthor().isBot()){
             Member author =  msg.getMember();
@@ -112,11 +118,11 @@ public class Bot extends ListenerAdapter {
             EmbedBuilder eb = new EmbedBuilder();
             MessageChannel channel = event.getChannel();
             eb.setTitle(Bundle.get("discord.help"));
-            eb.addField("1.", + Config.get("bot_prefix") + "send " + Bundle.get("discord.help.send"), false);
-            eb.addField("2.", + Config.get("bot_prefix") + "players " + Bundle.get("discord.help.players"), false);
-            eb.addField("3.", + Config.get("bot_prefix") + "ban " + Bundle.get("discord.help.ban"), false);
-            eb.addField("4.", + Config.get("bot_prefix") + "unban " + Bundle.get("discord.help.unban"), false);
-            eb.addField("5.", + Config.get("bot_prefix") + "add_map"  + Bundle.get("discord.help.add_map"), false);
+            eb.addField("1.",  Config.get("bot_prefix") + "send " + Bundle.get("discord.help.send"), false);
+            eb.addField("2.",  Config.get("bot_prefix") + "players " + Bundle.get("discord.help.players"), false);
+            eb.addField("3.",  Config.get("bot_prefix") + "ban " + Bundle.get("discord.help.ban"), false);
+            eb.addField("4.",  Config.get("bot_prefix") + "unban " + Bundle.get("discord.help.unban"), false);
+            eb.addField("5.",  Config.get("bot_prefix") + "add_map"  + Bundle.get("discord.help.add_map"), false);
             channel.sendMessageEmbeds(eb.build()).queue();
         }
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "add_map") && !msg.getAuthor().isBot()){

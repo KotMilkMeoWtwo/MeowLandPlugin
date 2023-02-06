@@ -9,7 +9,10 @@ import ru.meowland.commands.AdminCommands;
 import ru.meowland.commands.PlayerCommands;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
+import ru.meowland.config.Menu;
 import ru.meowland.discord.*;
+import ru.meowland.events.JoinEvent;
+import useful.menu.DynamicMenus;
 
 import javax.security.auth.login.LoginException;
 
@@ -29,7 +32,9 @@ public class MeowlandPlugin extends Plugin{
         Config con = new Config();
         con.loadConfig();
         Bundle.init();
+        Menu.init();
         Bot bot = new Bot();
+        new JoinEvent();
         try {
             bot.bot();
         } catch (LoginException e) {

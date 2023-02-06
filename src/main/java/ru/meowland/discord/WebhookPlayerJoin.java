@@ -35,8 +35,10 @@ public class WebhookPlayerJoin {
         Events.on(EventType.PlayerJoin.class, event ->{
             Player player = event.player;
             Administration.Config.showConnectMessages.set(false);
+            /*
             Call.sendMessage(Bundle.get("client.connected", player.name));
             Log.info(Bundle.get("server.connected", player.name, player.uuid()));
+             */
             String jsonBrut = "";
             jsonBrut += "{\"embeds\": "
                     + " \n["

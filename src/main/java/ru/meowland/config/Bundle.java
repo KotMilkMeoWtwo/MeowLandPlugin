@@ -5,6 +5,7 @@ import arc.files.Fi;
 import arc.struct.ObjectMap;
 import arc.util.Log;
 import arc.util.io.PropertiesUtils;
+import mindustry.gen.Player;
 import org.yaml.snakeyaml.Yaml;
 import ru.meowland.MeowlandPlugin;
 import ru.meowland.commands.AdminCommands;
@@ -23,8 +24,11 @@ public class Bundle {
     public static final String[] langList = {"en_US", "ru_RU", "zn_CN"};
     public static final Fi langDir = MeowlandPlugin.pluginDir.child("lang");
 
-    public static String seelctedLang;
+    public static String selectedLang;
+    public static String nyaLang;
     public static Fi file;
+    private static Fi nyaFile;
+    private static ObjectMap<String, String> nyaProperties;
 
     private static ObjectMap<String, String> properties;
 
@@ -32,16 +36,17 @@ public class Bundle {
         Log.info("Meowland plugin init");
         generate();
 
-        seelctedLang = Config.get("language");
-        file = langDir.child(seelctedLang + ".properties");
+        selectedLang = Config.get("language");
+        file = langDir.child(selectedLang + ".properties");
 
         properties = new ObjectMap<>();
+        nyaProperties = new ObjectMap<>();
         PropertiesUtils.load(
                 properties, file.reader()
         );
     }
 
-    public static void generate(){
+    private static void generate(){
         for (String lang : langList){
             final String langPath = "lang/" + lang + ".properties";
             final Fi file = MeowlandPlugin.pluginDir.child(langPath);
@@ -53,16 +58,22 @@ public class Bundle {
         }
     }
 
-    public static String get(String key, String... replace){
-        String value = properties.get(key);
-
-        int i = 0;
-        for(String to : replace){
-            value = value.replace("{" +i+ "}",to);
-            i++;
-        }
-        return value;
+    public static String get(String key){
+        return properties.get(key);
     }
+
+    public static String get(String key, Player player){
+        if (player.locale.equals("ru")){
+            nyaLang = "ru_RU";
+        } else {
+            nyaLang = "en_US";
+        }
+        nyaFile = langDir.child(nyaLang + ".properties");
+
+        return nyaProperties.get(key);
+    }
+
+
 
 }
 

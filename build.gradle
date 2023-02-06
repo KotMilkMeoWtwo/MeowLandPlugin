@@ -1,40 +1,38 @@
 apply plugin: "java"
-
 version '1.0'
 
-sourceCompatibility = 10
-
-repositories{
-    mavenCentral()
-    maven{ url 'https://www.jitpack.io' }
-}
+sourceCompatibility = 16
 
 ext{
-    //the build number that this plugin is made for
     mindustryVersion = 'v141'
 }
+
+
+repositories {
+    mavenCentral()
+    maven{url 'https://jitpack.io'}
+}
+
 
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
-    implementation("club.minnced:discord-webhooks:0.8.0")
-    implementation 'org.yaml:snakeyaml:1.30'
-    implementation("net.dv8tion:JDA:5.0.0-alpha.12")
-    implementation "com.github.xzxADIxzx.useful-stuffs:server-menus:2a68f24553"
+    implementation 'org.yaml:snakeyaml:1.33'
+    implementation 'net.dv8tion:JDA:5.0.0-alpha.12'
+    implementation 'com.github.xzxADIxzx.useful-stuffs:server-menus:2a68f24553'
     implementation 'org.mongodb:mongodb-driver-sync:4.8.1'
-
 }
-//mmmm
+
 compileJava {
     options.encoding = 'UTF8'
 }
+
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
 jar{
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveFileName = "MeowLandPlugin.jar"
-    version=null
     from{
         configurations.runtimeClasspath.collect{it.isDirectory() ? it : zipTree(it)}
     }

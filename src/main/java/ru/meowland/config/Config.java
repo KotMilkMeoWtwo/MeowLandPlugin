@@ -10,6 +10,7 @@ public class Config {
     private static String config = ""
             + "\n#Plugin language en_US/ru_RU/zh_CN"
             + "\nlanguage: en_US"
+            + "\ndiscord_link: https://discord.gg/enJVFYcK"
             + "\n#Discord integration settings"
             + "\n#webhook"
             + "\nwebhook_enable: false"
@@ -67,11 +68,7 @@ public class Config {
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString()));
         return obj.get(meow).toString();
     }
-    public static int getInt(int meow){
-        Yaml yml = new Yaml();
-        obj = yml.load(Core.settings.getDataDirectory().child("/mods/MeowLand/config.yml").readString());
-        return (int) obj.get(meow);
-    }
+
 
 
 
