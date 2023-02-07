@@ -69,7 +69,6 @@ public class Bot extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
-        Guild guild = event.getGuild();
         Message msg = event.getMessage();
         if(msg.getContentRaw().startsWith(Config.get("bot_prefix") + "send") && !msg.getAuthor().isBot()){
             MessageChannel channel = event.getChannel();
@@ -133,13 +132,13 @@ public class Bot extends ListenerAdapter {
                 MessageChannel channel = event.getChannel();
                 var attachments = msg.getAttachments();
                 if(attachments.size() != 1){
-                    channel.sendMessage(Bundle.get("discord.no_file"));
+                    channel.sendMessage(Bundle.get("discord.no_file")).queue();
                     return;
                 }
                 InputStream file = attachments.get(0).retrieveInputStream().join();
                 Core.settings.getDataDirectory().child("/maps/" + /*Math.random()*999999999 */ UUID.randomUUID().toString() + ".msav").write(file, false);
                 Vars.maps.reload();
-                channel.sendMessage(Bundle.get("discord.successful"));
+                channel.sendMessage(Bundle.get("discord.successful")).queue();
             }
         }
 

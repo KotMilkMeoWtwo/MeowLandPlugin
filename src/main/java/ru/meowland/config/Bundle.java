@@ -28,7 +28,7 @@ public class Bundle {
     public static String nyaLang;
     public static Fi file;
     private static Fi nyaFile;
-    private static ObjectMap<String, String> nyaProperties;
+    private static ObjectMap<String, String> nyaProperties = new ObjectMap<>();
 
     private static ObjectMap<String, String> properties;
 
@@ -40,10 +40,10 @@ public class Bundle {
         file = langDir.child(selectedLang + ".properties");
 
         properties = new ObjectMap<>();
-        nyaProperties = new ObjectMap<>();
         PropertiesUtils.load(
                 properties, file.reader()
         );
+
     }
 
     private static void generate(){
@@ -68,7 +68,10 @@ public class Bundle {
         } else {
             nyaLang = "en_US";
         }
-        nyaFile = langDir.child(nyaLang + ".properties");
+        nyaFile = langDir.child( nyaLang + ".properties");
+        PropertiesUtils.load(
+                nyaProperties, nyaFile.reader()
+        ); // скорее всего минус ОЗУ
 
         return nyaProperties.get(key);
     }

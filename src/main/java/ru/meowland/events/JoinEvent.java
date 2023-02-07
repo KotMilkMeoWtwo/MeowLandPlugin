@@ -16,11 +16,12 @@ public class JoinEvent {
         Events.on(EventType.ResetEvent.class, event -> DynamicMenus.clear());
 
         Events.on(EventType.PlayerJoin.class, event -> {
+            event.player.sendMessage(event.player.locale);
             DynamicMenus.menu(event.player, Bundle.get("menu.title", event.player),
                     Menu.get(event.player),
             new String[][]{
-                    {"Ок"},
-                    {"Перейти в дискорд"}
+                    {Bundle.get("menu.ok", event.player)},
+                    {Bundle.get("menu.discord", event.player)}
             }, (player, option) -> {
               if(option == 0){
                   player.sendMessage(Bundle.get("menu.ok", player));
