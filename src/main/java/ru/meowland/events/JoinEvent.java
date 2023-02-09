@@ -1,9 +1,11 @@
 package ru.meowland.events;
 
 import arc.Events;
+import arc.util.Log;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
 import mindustry.gen.Mechc;
+import mindustry.gen.Player;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 import ru.meowland.config.Menu;
@@ -16,17 +18,20 @@ public class JoinEvent {
         Events.on(EventType.ResetEvent.class, event -> DynamicMenus.clear());
 
         Events.on(EventType.PlayerJoin.class, event -> {
+            Player player = event.player;
+            Call.sendMessage(Bundle.get("client.connected", player.name));
+            Log.info(Bundle.get("server.connected", player.name, player.uuid()));
             event.player.sendMessage(event.player.locale);
             DynamicMenus.menu(event.player, Bundle.get("menu.title", event.player),
                     Menu.get(event.player),
             new String[][]{
                     {Bundle.get("menu.ok", event.player)},
                     {Bundle.get("menu.discord", event.player)}
-            }, (player, option) -> {
+            }, (p, option) -> {
               if(option == 0){
-                  player.sendMessage(Bundle.get("menu.ok", player));
+                  p.sendMessage(Bundle.get("menu.ok", p));
               } else if(option == 1){
-                  Call.openURI(player.con(), Config.get("discord_link"));
+                  Call.openURI(p.con(), Config.get("discord_link"));
               }
                     });
         });

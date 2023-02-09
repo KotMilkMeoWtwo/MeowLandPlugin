@@ -12,6 +12,7 @@ import ru.meowland.config.Config;
 import ru.meowland.config.Menu;
 import ru.meowland.discord.*;
 import ru.meowland.events.JoinEvent;
+import ru.meowland.events.LeaveEvent;
 import useful.menu.DynamicMenus;
 
 import javax.security.auth.login.LoginException;
@@ -35,6 +36,7 @@ public class MeowlandPlugin extends Plugin{
         Menu.init();
         Bot bot = new Bot();
         new JoinEvent();
+        new LeaveEvent();
         try {
             bot.bot();
         } catch (LoginException e) {

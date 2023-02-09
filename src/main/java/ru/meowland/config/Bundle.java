@@ -62,6 +62,16 @@ public class Bundle {
         return properties.get(key);
     }
 
+    public static String get(String key, String... replace){
+        String value = properties.get(key);
+        int i = 0;
+        for(String to : replace) {
+            value = value.replace("{" + i + "}", to);
+            i++;
+        }
+        return value;
+    }
+
     public static String get(String key, Player player){
         if (player.locale.equals("ru")){
             nyaLang = "ru_RU";
