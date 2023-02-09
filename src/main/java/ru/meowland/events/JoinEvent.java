@@ -29,7 +29,6 @@ public class JoinEvent {
                     {Bundle.get("menu.discord", event.player)}
             }, (p, option) -> {
               if(option == 0){
-                  p.sendMessage(Bundle.get("menu.ok", p));
               } else if(option == 1){
                   Call.openURI(p.con(), Config.get("discord_link"));
               }
