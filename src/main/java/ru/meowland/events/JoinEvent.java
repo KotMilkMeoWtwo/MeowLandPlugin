@@ -21,7 +21,6 @@ public class JoinEvent {
             Player player = event.player;
             Call.sendMessage(Bundle.get("client.connected", player.name));
             Log.info(Bundle.get("server.connected", player.name, player.uuid()));
-            event.player.sendMessage(event.player.locale);
             DynamicMenus.menu(event.player, Bundle.get("menu.title", event.player),
                     Menu.get(event.player),
             new String[][]{
