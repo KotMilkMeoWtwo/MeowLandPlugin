@@ -35,6 +35,7 @@ public class Config {
             + "\nwave: true"
             + "\nspawncore: false"
             + "\njs: false"
+            + "\neffect: false"
             + "\nsetblock: false"
             + "\nadvertisement: false"
             + "\n"

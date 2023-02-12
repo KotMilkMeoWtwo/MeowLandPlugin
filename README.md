@@ -18,7 +18,7 @@ mindustry build 141+
 * `/js <code>` - run JavaScript code
 * `/setblock <block>` - spawn block 
 * `/advertisement <text...>` - send gui menu with message
-
+* `/effect` - add beautiful effect to player
 ### Permissions
 
 All command permissions can be changed in the config (config/mods/Meowland/config.yml)
@@ -37,6 +37,7 @@ spawncore: false
 js: false
 setblock: false
 advertisement: false
+effect: false
 ```
 
 ### Discord integration

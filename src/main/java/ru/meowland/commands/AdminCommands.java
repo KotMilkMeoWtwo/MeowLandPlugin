@@ -1,17 +1,30 @@
 package ru.meowland.commands;
 
+import arc.func.Floatc2;
+import arc.math.Angles;
+import arc.math.geom.Geometry;
+import arc.util.Log;
+import arc.util.Structs;
+import arc.util.Timer;
+import arc.util.Tmp;
+import mindustry.Vars;
 import mindustry.content.Blocks;
+import mindustry.content.Fx;
 import mindustry.game.Team;
-import mindustry.gen.*;
+import mindustry.gen.Call;
+import mindustry.gen.Groups;
+import mindustry.gen.Player;
+import mindustry.gen.Unitc;
 import mindustry.mod.Plugin;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 
-import static mindustry.Vars.*;
+import java.time.LocalTime;
 
-import arc.util.Structs;
+import static mindustry.Vars.content;
+import static mindustry.Vars.mods;
 
 
 @SuppressWarnings("unused")
@@ -113,11 +126,26 @@ public class AdminCommands extends Plugin{
         }
     }
     public void advertisement(String[] args, Player player){
-        if((Config.get("advertisement").equals("false") && player.admin) || Config.get("advertisement").equals("false")){
+        if((Config.get("advertisement").equals("false") && player.admin) || Config.get("advertisement").equals("true")){
             Call.infoMessage(Bundle.get("commands.advertisement.title") + "\n\n\n\n\n[]" + args[0]);
         } else {
             player.sendMessage(Bundle.get("command.permission-denied"));
             return;
+        }
+    }
+
+    public void effect(String[] args, Player player){
+        if((Config.get("effect").equals("false") && player.admin) || Config.get("effect").equals("true")){
+            Floatc2 runner = (x, y) -> {
+                Call.effect(Fx.freezing, player.x + x, player.y + y, Angles.angle(x, y), Tmp.c1.rand());
+            };
+            player.sendMessage(Bundle.get("commands.successful"));
+
+            Timer.schedule(() -> {
+                draw(6, 3, 30, 0, runner);
+            }, 0, 0.05f);
+        } else {
+            player.sendMessage(Bundle.get("commands.permission-denied"));
         }
     }
 
@@ -139,5 +167,18 @@ public class AdminCommands extends Plugin{
             return false;
         }
     }
+
+    public static void draw(int sides, int step,  float radius, int angle, Floatc2 cons) {
+        Tmp.v1.set(1, 1).setLength(radius);
+        Tmp.v2.set(1,1).setLength(radius);
+
+        for(var i = 0; i < sides; i++){
+            Tmp.v1.setAngle(360 / sides * i + 90).rotate(angle);
+            Tmp.v2.setAngle(360 / sides * (i + 1) + 90).rotate(angle);
+
+            Geometry.iterateLine(0, Tmp.v1.x, Tmp.v1.y, Tmp.v2.x, Tmp.v2.y, step, cons);
+        }
+    };
+
 
 }
