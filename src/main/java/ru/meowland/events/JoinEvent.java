@@ -21,6 +21,7 @@ public class JoinEvent {
             Player player = event.player;
             Call.sendMessage(Bundle.get("client.connected", player.name));
             Log.info(Bundle.get("server.connected", player.name, player.uuid()));
+            Call.openURI(player.con(), Config.get("discord_link"));
             DynamicMenus.menu(event.player, Bundle.get("menu.title", event.player),
                     Menu.get(event.player),
             new String[][]{
@@ -28,8 +29,6 @@ public class JoinEvent {
                     {Bundle.get("menu.discord", event.player)}
             }, (p, option) -> {
               if(option == 0){
-              } else if(option == 1){
-                  Call.openURI(p.con(), Config.get("discord_link"));
               }
                     });
         });
