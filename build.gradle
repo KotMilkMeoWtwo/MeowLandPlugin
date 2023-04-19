@@ -4,7 +4,7 @@ version '1.0'
 sourceCompatibility = 16
 
 ext{
-    mindustryVersion = 'v141'
+    mindustryVersion = 'v143.1'
 }
 
 
