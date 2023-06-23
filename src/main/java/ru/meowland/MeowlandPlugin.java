@@ -34,22 +34,9 @@ public class MeowlandPlugin extends Plugin{
         con.loadConfig();
         Bundle.init();
         Menu.init();
-        Bot bot = new Bot();
+        if(Config.get("bot_enable").equals("true")) Bot.init();
         new JoinEvent();
         new LeaveEvent();
-        try {
-            bot.bot();
-        } catch (LoginException e) {
-            throw new RuntimeException(e);
-        }
-        WebhookPlayerJoin join = new WebhookPlayerJoin();
-        join.join();
-        WebhookPlayerLeave leave = new WebhookPlayerLeave();
-        leave.leave();
-        WebhookPlayerMessage message = new WebhookPlayerMessage();
-        message.message();
-        WebhookServerLoaded loaded = new WebhookServerLoaded();
-        loaded.serverLoad();
         Log.info("Meowland: plugin started");
         if(Config.get("webhook_enable").equals("true")){
             Log.info("Meowland: discord webhook is enable");

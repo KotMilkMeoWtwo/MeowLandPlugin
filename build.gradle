@@ -4,7 +4,7 @@ version '1.0'
 sourceCompatibility = 16
 
 ext{
-    mindustryVersion = 'v143.1'
+    mindustryVersion = 'v145.1'
 }
 
 
@@ -18,7 +18,7 @@ dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
     implementation 'org.yaml:snakeyaml:1.33'
-    implementation 'net.dv8tion:JDA:5.0.0-alpha.12'
+    implementation 'net.dv8tion:JDA:5.0.0-beta.11'
     implementation 'com.github.xzxADIxzx.useful-stuffs:server-menus:2a68f24553'
     implementation 'org.mongodb:mongodb-driver-sync:4.8.1'
 }

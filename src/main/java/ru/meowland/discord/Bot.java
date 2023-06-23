@@ -1,32 +1,23 @@
 package ru.meowland.discord;
 
-import arc.Core;
-import arc.Events;
-import arc.util.Log;
-import mindustry.Vars;
-import mindustry.core.NetServer;
-import mindustry.game.EventType;
-import mindustry.gen.Call;
-import mindustry.gen.Groups;
-import mindustry.gen.Player;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
+import ru.meowland.discord.commands.Command;
 
-import javax.security.auth.login.LoginException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.UUID;
+public class Bot {
 
-public class Bot extends ListenerAdapter {
+    public static JDA jda;
+    public static final String cmdMindustry = "mindustry";
+    public static void init(){
+        String token = Config.get("bot_token");
+        jda = JDABuilder.createLight(token)
+                .addEventListeners(new Command())
+                .build();
+    }
 
 
+    /*
     public void bot() throws LoginException {
         if(Config.get("bot_enable").equals("true")){
             Log.info("Meowland: bot started");
@@ -136,11 +127,12 @@ public class Bot extends ListenerAdapter {
                     return;
                 }
                 InputStream file = attachments.get(0).retrieveInputStream().join();
-                Core.settings.getDataDirectory().child("/maps/" + /*Math.random()*999999999 */ UUID.randomUUID().toString() + ".msav").write(file, false);
+                Core.settings.getDataDirectory().child("/maps/" + /*Math.random()*999999999  UUID.randomUUID().toString() + ".msav").write(file, false);
                 Vars.maps.reload();
                 channel.sendMessage(Bundle.get("discord.successful")).queue();
             }
         }
 
     }
+    */
 }
