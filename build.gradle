@@ -21,6 +21,8 @@ dependencies{
     implementation 'net.dv8tion:JDA:5.0.0-beta.11'
     implementation 'com.github.xzxADIxzx.useful-stuffs:server-menus:2a68f24553'
     implementation 'org.mongodb:mongodb-driver-sync:4.8.1'
+    implementation 'com.github.oshi:oshi-core:6.4.3'
+
 }
 
 compileJava {
