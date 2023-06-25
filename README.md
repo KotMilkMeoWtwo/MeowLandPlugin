@@ -2,7 +2,7 @@
 
 This plugin is being developed for the meowland.ru server but anyone can use it.
 
-mindustry build 141+
+mindustry build 145.1
 ### Player commands
 
 * `/wave` - vote for wave skip. 
@@ -45,26 +45,21 @@ effect: false
 The output of messages and events to the discord is configured in the config (config/mods/MeowLand/config.yml)
 ```yml
 #Discord integration settings
-#webhook
-enable: false
-webhook_url: url
-channel_id: id
-avatar_url: https://github.com/Anuken/Mindustry/blob/master/core/assets-raw/sprites/units/corvus.png?raw=true
-server_name: test server
 #bot
 bot_enable: true
+server_name: server_name
 bot_token: token
 channel_id: id
-bot_prefix: !
+admin_role: id
 ```
 
 ### Bot commands
 
 !! `bot_enable` must be true !!
 
-* `m!send <text>` - send message on mindustry server
-* `m!players` - display all players at the server\
-* `m!ban <uuid>` - ban player (need kick). Admin only cmd
-* `m!unban <uuid>` - unban player. Admin only cmd
-* `m!add_map <file.msav>` - add map on server. Admin only cmd. Need server restart
-
+* `/server_name send <text>` - send message to the mindustry server
+* `/server_name players` - list of players on the server [ADMIN ONLY CMD]
+* `/server_name ban <uuid> <reaon>` - ban player on the server [ADMIN ONLY CMD]
+* `/server_name unban <uuid>` - unban player on the server [ADMIN ONLY CMD]
+* `/server_name add_map <attachment>` - add map to the server [ADMIN ONLY CMD]
+* `/server_name maps` - list of custom maps on the server
