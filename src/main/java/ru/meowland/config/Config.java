@@ -7,8 +7,8 @@ import org.yaml.snakeyaml.Yaml;
 import java.util.Map;
 
 public class Config {
-    private static String config = ""
-            + "\n#Plugin language en_US/ru_RU/zh_CN"
+    private static final String config =
+            "\n#Plugin language en_US/ru_RU/zh_CN"
             + "\nlanguage: en_US"
             + "\ndiscord_link: https://discord.gg/enJVFYcK"
             + "\n#Discord integration settings"
@@ -16,6 +16,7 @@ public class Config {
             + "\nbot_enable: true"
             + "\nbot_token: token"
             + "\nchannel_id: id"
+            + "\nadmin_role: id"
             //+ "\nbot_prefix: m!"
             + "\n#Mindustry settings"
             + "\n#Permissions."

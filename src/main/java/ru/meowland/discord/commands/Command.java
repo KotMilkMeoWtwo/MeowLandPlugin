@@ -11,6 +11,7 @@ import mindustry.maps.Maps;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -21,17 +22,12 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import org.jetbrains.annotations.NotNull;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
-import oshi.hardware.HardwareAbstractionLayer;
-import oshi.hardware.platform.unix.aix.AixHardwareAbstractionLayer;
-import oshi.hardware.platform.unix.openbsd.OpenBsdCentralProcessor;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 import ru.meowland.discord.Bot;
 
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Command extends ListenerAdapter {
@@ -40,6 +36,7 @@ public class Command extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         String command = event.getFullCommandName().replace(Config.get("server_name").toLowerCase() + " ", "");
+        Role admRole = Objects.requireNonNull(event.getGuild()).getRoleById(Config.get("admin_role"));
         switch (command){
             case "send" -> {
                 OptionMapping optionMapping = event.getOption("input");
@@ -49,46 +46,63 @@ public class Command extends ListenerAdapter {
                 event.reply(Bundle.get("discord.successful")).queue();
             }
             case "players" -> {
-                StringBuilder builder = new StringBuilder();
-                EmbedBuilder eb = new EmbedBuilder();
-                eb.setTitle(Config.get("server_name"));
-                eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
-                Groups.player.each(p ->{
-                    builder.append(p.name).append(" uuid: ").append(p.uuid()).append(" admin: ").append(p.admin()).append("\n");
-                });
-                eb.addField(Bundle.get("discord.players"), builder.toString(), false);
-                event.replyEmbeds(eb.build()).queue();
-                event.reply(Bundle.get("discord.successful")).queue();
+                if(!Objects.requireNonNull(event.getMember()).getRoles().contains(admRole)){
+                    event.reply(Bundle.get("discord.permission-denied")).queue();
+                }else {
+                    StringBuilder builder = new StringBuilder();
+                    EmbedBuilder eb = new EmbedBuilder();
+                    eb.setTitle(Config.get("server_name"));
+                    eb.addField(Bundle.get("discord.count"), String.valueOf(Groups.player.size()), false);
+                    Groups.player.each(p ->{
+                        builder.append(p.name).append(" uuid: ").append(p.uuid()).append(" admin: ").append(p.admin()).append("\n");
+                    });
+                    eb.addField(Bundle.get("discord.players"), builder.toString(), false);
+                    event.replyEmbeds(eb.build()).queue();
+                }
+
             }
             case "ban" -> {
-                OptionMapping uuid = event.getOption("uuid");
-                OptionMapping reason = event.getOption("reason");
-                assert uuid != null;
-                assert reason != null;
-                String uuidS = uuid.getAsString();
-                String reasonS = reason.getAsString();
-                NetServer server = Vars.netServer;
-                server.admins.banPlayerID(uuidS);
-                Groups.player.find(p -> p.uuid().equals(uuidS)).kick(reasonS, 0);
-                event.reply(Bundle.get("discord.successful")).queue();
+                if(!Objects.requireNonNull(event.getMember()).getRoles().contains(admRole)){
+                    event.reply(Bundle.get("discord.permission-denied")).queue();
+                } else {
+                    OptionMapping uuid = event.getOption("uuid");
+                    OptionMapping reason = event.getOption("reason");
+                    assert uuid != null;
+                    assert reason != null;
+                    String uuidS = uuid.getAsString();
+                    String reasonS = reason.getAsString();
+                    NetServer server = Vars.netServer;
+                    server.admins.banPlayerID(uuidS);
+                    Groups.player.find(p -> p.uuid().equals(uuidS)).kick(reasonS, 0);
+                    event.reply(Bundle.get("discord.successful")).queue();
+                }
+
             }
             case "unban" -> {
-                OptionMapping uuid = event.getOption("uuid");
-                assert  uuid != null;
-                String uuidS = uuid.getAsString();
-                NetServer server = Vars.netServer;
-                server.admins.unbanPlayerID(uuidS);
-                event.reply(Bundle.get("discord.successful")).queue();
+                if(!Objects.requireNonNull(event.getMember()).getRoles().contains(admRole)){
+                    event.reply(Bundle.get("discord.permission-denied")).queue();
+                } else {
+                    OptionMapping uuid = event.getOption("uuid");
+                    assert uuid != null;
+                    String uuidS = uuid.getAsString();
+                    NetServer server = Vars.netServer;
+                    server.admins.unbanPlayerID(uuidS);
+                    event.reply(Bundle.get("discord.successful")).queue();
+                }
             }
             case "add_map" -> {
-                Maps maps = Vars.maps;
-                OptionMapping map = event.getOption("map");
-                assert  map != null;
-                Message.Attachment mapAsAttachment = map.getAsAttachment();
-                if(!mapAsAttachment.getFileName().contains(".msav"))  event.reply("Map must be .msav").queue();
-                mapAsAttachment.getProxy().downloadToFile(new File("config/maps/" + mapAsAttachment.getFileName()));
-                maps.reload();
-                event.reply(Bundle.get("discord.successful")).queue();
+                if(!Objects.requireNonNull(event.getMember()).getRoles().contains(admRole)){
+                    event.reply(Bundle.get("discord.permission-denied")).queue();
+                } else {
+                    Maps maps = Vars.maps;
+                    OptionMapping map = event.getOption("map");
+                    assert map != null;
+                    Message.Attachment mapAsAttachment = map.getAsAttachment();
+                    if (!mapAsAttachment.getFileName().contains(".msav")) event.reply("Map must be .msav").queue();
+                    mapAsAttachment.getProxy().downloadToFile(new File("config/maps/" + mapAsAttachment.getFileName()));
+                    maps.reload();
+                    event.reply(Bundle.get("discord.successful")).queue();
+                }
             }
             case "maps" -> {
                 Maps maps = Vars.maps;
@@ -122,15 +136,6 @@ public class Command extends ListenerAdapter {
 
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
-        /*
-        OptionData optionData = new OptionData(OptionType.STRING, "cmd", "cmd what bot will do", true)
-                .addChoice("Send message to server", "send")
-                .addChoice("List of players", "players")
-                .addChoice("Ban player", "ban")
-                .addChoice("Unban player", "unban")
-                .addChoice("Add map to server", "add_map")
-                .addChoice("List maps of server", "maps");
-         */
         OptionData send = new OptionData(OptionType.STRING, "input", "message what u want to send", true);
         OptionData banUUID = new OptionData(OptionType.STRING, "uuid", "uuid player what u want to ban", true);
         OptionData banReason = new OptionData(OptionType.STRING, "reason", "reason of the ban", true);
