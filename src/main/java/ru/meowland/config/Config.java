@@ -17,6 +17,8 @@ public class Config {
             + "\nbot_token: token"
             + "\nchannel_id: id"
             + "\nadmin_role: id"
+            + "\nadmin_channel: id"
+            + "\nbans_channel: id"
             //+ "\nbot_prefix: m!"
             + "\n#Mindustry settings"
             + "\n#Permissions."

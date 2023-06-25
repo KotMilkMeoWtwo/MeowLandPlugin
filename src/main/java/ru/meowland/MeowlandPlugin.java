@@ -47,10 +47,9 @@ public class MeowlandPlugin extends Plugin{
     @Override
     public void registerClientCommands(CommandHandler handler){
         AdminCommands adminCommands = new AdminCommands();
-        handler.<Player>register("shiza", Bundle.get("command.shiza.usage"), Bundle.get("command.shiza.dsc"), playerCommands::shiza);
         handler.<Player>register("rtv", Bundle.get("command.rtv.dsc"), playerCommands::rtv);
         handler.<Player>register("wave", Bundle.get("command.wave.desc"), playerCommands::wave);
-
+        handler.<Player>register("request", "secret", playerCommands::request);
 
         handler.<Player>register("js", "<code...>", "run js code", adminCommands::js);
         handler.<Player>register("despw",  Bundle.get("command.despw.dsc"), adminCommands::despw);

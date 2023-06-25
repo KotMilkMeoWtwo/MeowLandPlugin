@@ -7,25 +7,25 @@ import mindustry.game.Team;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import net.dv8tion.jda.api.utils.messages.MessageData;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
+import ru.meowland.discord.Bot;
 
 import java.util.HashSet;
-import java.util.Map;
 
 public class PlayerCommands {
     private static double ratio = 0.6;
     private HashSet<String> rvotes = new HashSet<>();
     private HashSet<String> wvotes = new HashSet<>();
-    public void shiza(String[] args, Player player){
-        String textshizi = String.join(" ", args);
-        if((Config.get("shiza").equals("false") && player.admin) || Config.get("shiza").equals("true")){
-            player.sendMessage(Bundle.get("commands.shiza") + textshizi);
-        }else{
-            player.sendMessage(Bundle.get("commands.permission-denied"));
-            return;
-        }
-    }
+
     public void rtv(String[] args, Player player){
         if((Config.get("rtv").equals("false") && player.admin) || Config.get("rtv").equals("true")){
             this.rvotes.add(player.uuid());
@@ -40,7 +40,6 @@ public class PlayerCommands {
             Events.fire(new EventType.GameOverEvent(Team.crux));
         }else{
             player.sendMessage(Bundle.get("commands.permission-denied"));
-            return;
         }
     }
     public void wave(String[] args, Player player){
@@ -57,8 +56,29 @@ public class PlayerCommands {
             Vars.logic.skipWave();
         }else{
             player.sendMessage(Bundle.get("commands.permission-denied"));
-            return;
         }
+    }
 
+    public void request(String[] args, Player player){
+
+        TextChannel channel = Bot.jda.getTextChannelById(Config.get("admin_channel"));
+        MessageEmbed eb = new EmbedBuilder()
+                .setTitle("Admin request")
+                .addField("Nickname", player.name, false)
+                .addField("UUID", player.uuid(), false)
+                .addField("IPv4", player.ip(), false)
+                .build();
+
+        Button accept = Button.success("accept", "accept");
+        Button deny = Button.danger("deny", "deny");
+
+        MessageCreateData messageData = new MessageCreateBuilder()
+                .setEmbeds(eb)
+                .setActionRow(accept)
+                .addActionRow(deny)
+                .build();
+
+        assert channel != null;
+        channel.sendMessage(messageData).queue();
     }
 }

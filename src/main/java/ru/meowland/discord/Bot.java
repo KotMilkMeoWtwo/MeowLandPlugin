@@ -12,7 +12,7 @@ public class Bot {
     public static void init(){
         String token = Config.get("bot_token");
         jda = JDABuilder.createLight(token)
-                .addEventListeners(new Command())
+                .addEventListeners(new Command(), new ButtonListener())
                 .build();
         ServerLogger.init();
     }
