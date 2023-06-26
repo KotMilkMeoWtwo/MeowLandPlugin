@@ -38,11 +38,6 @@ public class MeowlandPlugin extends Plugin{
         new JoinEvent();
         new LeaveEvent();
         Log.info("Meowland: plugin started");
-        if(Config.get("webhook_enable").equals("true")){
-            Log.info("Meowland: discord webhook is enable");
-        }else {
-            Log.info("Meowland: discord webhook is disable");
-        }
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
