@@ -8,16 +8,14 @@ import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
-import net.dv8tion.jda.api.utils.messages.MessageData;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
-import ru.meowland.discord.Bot;
+import ru.meowland.modules.discord.Bot;
 
 import java.util.HashSet;
 
@@ -64,6 +62,7 @@ public class PlayerCommands {
         TextChannel channel = Bot.jda.getTextChannelById(Config.get("admin_channel"));
         MessageEmbed eb = new EmbedBuilder()
                 .setTitle("Admin request")
+                .addField("Server", Config.get("server_name"), false)
                 .addField("Nickname", player.name, false)
                 .addField("UUID", player.uuid(), false)
                 .addField("IPv4", player.ip(), false)

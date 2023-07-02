@@ -1,4 +1,4 @@
-package ru.meowland.discord;
+package ru.meowland.modules.discord;
 
 import arc.util.Log;
 import mindustry.gen.Groups;

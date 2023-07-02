@@ -38,6 +38,7 @@ public class Config {
             + "\n"
             + "\n#Commands settings"
             + "\nspawn-limit: 15"
+            + "\nhistory_enabled: true"
             + "\n"
             + "\n#Data base"
             + "\n"

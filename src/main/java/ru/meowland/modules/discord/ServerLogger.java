@@ -1,4 +1,4 @@
-package ru.meowland.discord;
+package ru.meowland.modules.discord;
 
 import arc.Events;
 import arc.util.Log;
@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
-import ru.meowland.discord.Bot;
 
 public class ServerLogger {
     public static void init(){

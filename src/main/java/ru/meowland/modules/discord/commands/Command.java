@@ -1,4 +1,4 @@
-package ru.meowland.discord.commands;
+package ru.meowland.modules.discord.commands;
 
 import arc.struct.Seq;
 import arc.util.Log;
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import oshi.SystemInfo;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
-import ru.meowland.discord.Bot;
+import ru.meowland.modules.discord.Bot;
 
 import java.io.File;
 import java.text.DecimalFormat;

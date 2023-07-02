@@ -81,7 +81,7 @@ public class Bundle {
         nyaFile = langDir.child( nyaLang + ".properties");
         PropertiesUtils.load(
                 nyaProperties, nyaFile.reader()
-        ); // скорее всего минус ОЗУ
+        );
 
         return nyaProperties.get(key);
     }

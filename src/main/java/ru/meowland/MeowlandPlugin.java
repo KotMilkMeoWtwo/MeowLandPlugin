@@ -10,12 +10,9 @@ import ru.meowland.commands.PlayerCommands;
 import ru.meowland.config.Bundle;
 import ru.meowland.config.Config;
 import ru.meowland.config.Menu;
-import ru.meowland.discord.*;
-import ru.meowland.events.JoinEvent;
-import ru.meowland.events.LeaveEvent;
-import useful.menu.DynamicMenus;
-
-import javax.security.auth.login.LoginException;
+import ru.meowland.events.Events;
+import ru.meowland.modules.discord.Bot;
+import ru.meowland.modules.history.History;
 
 public class MeowlandPlugin extends Plugin{
 
@@ -35,9 +32,8 @@ public class MeowlandPlugin extends Plugin{
         Bundle.init();
         Menu.init();
         if(Config.get("bot_enable").equals("true")) Bot.init();
-        new JoinEvent();
-        new LeaveEvent();
-        Log.info("Meowland: plugin started");
+        new Events();
+        Log.info("MeowLand: plugin started");
     }
     @Override
     public void registerClientCommands(CommandHandler handler){
